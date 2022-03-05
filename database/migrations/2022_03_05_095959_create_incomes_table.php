@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->smallInteger('level');
-            $table->bigInteger('parent');
-            $table->string('code');
-            $table->string('title');
+            $table->bigInteger('user_id')->constrained();
+            $table->float('balance');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('incomes');
     }
 };

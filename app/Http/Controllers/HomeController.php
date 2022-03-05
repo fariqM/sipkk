@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $path = 'Dasbor';
+        return view('dashboard', compact('path'));
     }
 }

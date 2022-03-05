@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('App\Http\Controllers')->group(function(){
     Route::middleware('auth')->group(function(){
+        Route::prefix('account')->group(function(){
+            Route::get('index', 'AccountController@index');
+        });
         Route::get('/dasbor', [App\Http\Controllers\HomeController::class, 'index'])->name('dasbor');
     });
 

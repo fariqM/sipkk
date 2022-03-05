@@ -13,8 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('finances', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('account_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->string('description');
+            $table->float('debit');
+            $table->float('credit');
+            $table->float('balance');
             $table->timestamps();
         });
     }
@@ -26,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('finances');
     }
 };

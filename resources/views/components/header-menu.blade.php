@@ -26,7 +26,7 @@
             <!-- BEGIN: Setup Pengguna -->
             <li>
                 <a href="javascript:;" class="{{ Request::is('pengguna') ? 'active' : '' }}">
-                    <span class="nav-icon"><i class="fa fa-fw fa-table"></i></span>
+                    <span class="nav-icon"><i class="fa fa-fw fa-users"></i></span>
                     <span class="nav-title">Setup Pengguna</span>
                     <span class="nav-tools visible-xs"><i class="fa fa-fw arrow"></i></span>
                 </a>

@@ -57,25 +57,8 @@
                     @include('components.header-menu')
                     <!-- END: .main-heading -->
 
-                    <!-- begin .main-heading -->
-                    @include('components.header-content')
-                    <!-- END: .main-heading -->
-
                     <!-- begin .main-content -->
-                    <div class="main-content bg-clouds">
-
-                        <!-- begin .container-fluid -->
-                        <div class="container-fluid p-t-15">
-                            <div class="box b-a">
-                                <div class="box-body">
-                                    &nbsp;
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- END: .container-fluid -->
-
-                    </div>
+                    @yield('content')
                     <!-- END: .main-content -->
 
                     <!-- begin .main-footer -->

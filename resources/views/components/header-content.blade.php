@@ -12,7 +12,7 @@
         <div class="dashhead-toolbar">
             <div class="dashhead-toolbar-item">
                 <a href="/">{{ config('app.name', 'Laravel') }}</a>
-                / {{ ucwords(\Request::route()->getName()) }}
+                / {{ $slot }}
             </div>
         </div>
     </div>
