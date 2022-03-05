@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::namespace('App\Http\Controllers')->group(function(){
+    Route::middleware('auth')->group(function(){
+        Route::get('/dasbor', [App\Http\Controllers\HomeController::class, 'index'])->name('dasbor');
+    });
+
+    Route::middleware('guest')->group(function(){
+        Route::get('/', function () {
+            return view('auth.login');
+        });
+    });
 });
+
+
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
