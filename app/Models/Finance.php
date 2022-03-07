@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Finance extends Model
 {
     use HasFactory;
+
+    protected $fillable= [
+        'account_category_id',
+        'description',
+        'debit',
+        'credit',
+        'balance',
+    ];
+
 }

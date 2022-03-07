@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('finances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')
+            $table->foreignId('account_category_id')
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('description');

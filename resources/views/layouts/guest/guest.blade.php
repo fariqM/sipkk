@@ -10,20 +10,20 @@
 
   <!-- Core stylesheet files. REQUIRED -->
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.css') }}">
 
   <!-- Font Awesome -->
   <!-- WARNING: Font Awesome doesn't work if you view the page via file:// -->
-  <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.css') }}">
 
   <!-- animate.css -->
-  <link rel="stylesheet" href="assets/vendor/animate.css/animate.css">
+  <link rel="stylesheet" href="{{ asset('assets/vendor/animate.css/animate.css') }}">
   <!-- END: core stylesheet files -->
   <!-- Theme main stlesheet files. REQUIRED -->
-  <link rel="stylesheet" href="assets/css/chaldene.css">
-  <link rel="stylesheet" href="assets/css/theme-peter-river.css">
+  <link rel="stylesheet" href="{{ asset('assets/css/chaldene.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/theme-peter-river.css') }}">
   <!-- END: theme main stylesheet files -->
-  <link rel="stylesheet" href="assets/css/custom.css">
+  <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 </head>
 
 <body class="bg-clouds">
@@ -31,9 +31,9 @@
 
   <!-- Core javascript files. REQUIRED -->
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="assets/vendor/jquery/jquery.js"></script>
+  <script src="{{ asset('assets/vendor/jquery/jquery.js') }}"></script>
 
   <!-- Bootstrap -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.js') }}"></script>
 </body>
 </html>

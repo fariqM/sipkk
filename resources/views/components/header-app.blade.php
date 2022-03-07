@@ -7,10 +7,10 @@
                 <!--begin logo-->
                 <a class="logo" href="index.html">
                     <span class="logo-xs visible-xs">
-                        <img src="assets/img/logo_xs.svg" alt="logo-xs">
+                        <img src="{{ asset('assets/img/logo_xs.svg') }}" alt="logo-xs">
                     </span>
                     <span class="logo-lg hidden-xs">
-                        <img src="assets/img/logo_lg.svg" alt="logo-lg">
+                        <img src="{{ asset('assets/img/logo_lg.svg') }}" alt="logo-lg">
                     </span>
                 </a>
                 <!--end logo-->
@@ -130,7 +130,7 @@
                 <li class="dropdown b-l">
                     <a class="dropdown-toggle profile-pic" href="#" data-toggle="dropdown" role="button"
                         aria-haspopup="true" aria-expanded="false">
-                        <img class="img-circle" src="assets/img/Dreamy Waze.png" alt="Jane Doe">
+                        <img class="img-circle" src="{{ asset('assets/img/Dreamy Waze.png') }}" alt="Jane Doe">
                         <b class="hidden-xs hidden-sm">Jane Doe</b>
                     </a>
                     <ul class="dropdown-menu animated flipInY pull-right">

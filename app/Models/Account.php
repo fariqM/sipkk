@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     use HasFactory;
+
+    protected $fillable= ['title'];
+
+    public function categories(){
+        return $this->hasMany(AccountCategory::class);
+    }
 }

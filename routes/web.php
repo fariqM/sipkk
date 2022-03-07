@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('App\Http\Controllers')->group(function(){
     Route::middleware('auth')->group(function(){
         Route::prefix('account')->group(function(){
-            Route::get('index', 'AccountController@index');
+            Route::get('index', 'AccountController@index')->name('account');
         });
         Route::get('/dasbor', [App\Http\Controllers\HomeController::class, 'index'])->name('dasbor');
     });
@@ -25,7 +25,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::middleware('guest')->group(function(){
         Route::get('/', function () {
             return view('auth.login');
-        });
+        })->name('account.test');
     });
 });
 

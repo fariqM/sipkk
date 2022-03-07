@@ -19,20 +19,21 @@
     <!-- Styles -->
     <!-- Vendor stylesheet files. REQUIRED -->
     <!-- BEGIN: Vendor  -->
-    <link rel="stylesheet" href="assets/css/vendor.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor.css') }}">
     <!-- END: Vendor stylesheet files -->
 
     <!-- Theme main stlesheet files. REQUIRED -->
-    <link rel="stylesheet" href="assets/css/chaldene.css">
-    <link id="theme-list" rel="stylesheet" href="assets/css/theme-peter-river.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/chaldene.css') }}">
+    <link id="theme-list" rel="stylesheet" href="{{ asset('assets/css/theme-peter-river.css') }}">
     <!-- END: theme main stylesheet files -->
 
     <!-- theme-switcher stylesheet files. NOT REQUIRED -->
-    <link rel="stylesheet" href="assets/css/theme-switcher.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/theme-switcher.css') }}">
     <!-- END: theme-switcher stylesheet file. -->
 
-    <link rel="stylesheet" href="assets/vendor/highlight/styles/atom-one-dark.css">
-    <link type="text/css" rel="stylesheet" href="assets/vendor/perfect-scrollbar/perfect-scrollbar.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/highlight/styles/atom-one-dark.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/vendor/perfect-scrollbar/perfect-scrollbar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
     @yield('css')
 </head>
@@ -186,20 +187,25 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="theme">
                         <nav class="theme-list u-flex u-flexWrap u-flexRow u-flexJustifyBetween">
-                            <a class="m-v-5" href="#" rel="assets/css/theme-peter-river.css">
-                                <img src="assets/img/theme-peter-river.svg" alt="peter-river">
+                            <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-peter-river.css') }}">
+                                peter-river
+                                {{-- <img src="assets/img/theme-peter-river.svg" alt="peter-river"> --}}
                             </a>
-                            <a class="m-v-5" href="#" rel="assets/css/theme-turquoise.css">
-                                <img src="assets/img/theme-turquoise.svg" alt="turquoise">
+                            <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-turquoise.css') }}">
+                                turquoise
+                                {{-- <img src="assets/img/theme-turquoise.svg" alt="turquoise"> --}}
                             </a>
-                            <a class="m-v-5" href="#" rel="assets/css/theme-amethyst.css">
-                                <img src="assets/img/theme-amethyst.svg">
+                            <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-amethyst.css') }}">
+                                amethyst
+                                {{-- <img src="assets/img/theme-amethyst.svg"> --}}
                             </a>
-                            <a class="m-v-5" href="#" rel="assets/css/theme-orange.css">
-                                <img src="assets/img/theme-orange.svg" alt="orange">
+                            <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-orange.css') }}">
+                                orange
+                                {{-- <img src="assets/img/theme-orange.svg" alt="orange"> --}}
                             </a>
-                            <a class="m-v-5" href="#" rel="assets/css/theme-alizarin.css">
-                                <img src="assets/img/theme-alizarin.svg" alt="alizarin">
+                            <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-alizarin.css') }}">
+                                alizarin
+                                {{-- <img src="assets/img/theme-alizarin.svg" alt="alizarin"> --}}
                             </a>
                         </nav>
                     </div>
@@ -212,18 +218,18 @@
 
 
     <!-- Vendor javascript files. REQUIRED -->
-    <script src="assets/js/vendor.js"></script>
+    <script src="{{ asset('assets/js/vendor.js') }}"></script>
     <!-- END: Vendor javascript files -->
 
-    <script src="assets/js/chaldene.js"></script>
+    <script src="{{ asset('assets/js/chaldene.js') }}"></script>
 
     <!-- theme-switcher scripts file. NOT REQUIRED -->
-    <script src="assets/js/theme-switcher.js"></script>
+    <script src="{{ asset('assets/js/theme-switcher.js') }}"></script>
     <!-- END: theme-switcher scripts file. -->
 
     <!-- Plugin javascript files. OPTIONAL -->
-    <script src="assets/vendor/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
-    <script src="assets/vendor/highlight/highlight.pack.js"></script>
+    <script src="{{ asset('assets/vendor/perfect-scrollbar/perfect-scrollbar.jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/highlight/highlight.pack.js') }}"></script>
     <script>
         $(document).ready(function()
     {

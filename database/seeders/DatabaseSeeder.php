@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Account;
+use App\Models\AccountCategory;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -50,5 +52,22 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
         $admin->assignRole('Super Admin');
+
+        Account::create([
+            'title' => 'KAS'
+        ]);
+
+        AccountCategory::create([
+            'level' => 3,
+            'account_id' => 1,
+            'code' => '1.01.01',
+            'title' => 'Kas Lingkungan'
+        ]);
+        AccountCategory::create([
+            'level' => 3,
+            'account_id' => 1,
+            'code' => '1.01.02',
+            'title' => 'Kas Kecil Blok'
+        ]);
     }
 }

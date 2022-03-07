@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->constrained();
+            $table->foreignId('event_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->float('balance');
             $table->timestamps();
         });
