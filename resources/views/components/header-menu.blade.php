@@ -25,7 +25,7 @@
 
             <!-- BEGIN: Setup Pengguna -->
             <li>
-                <a href="javascript:;" class="{{ $path === 'pengguna' ? 'active' : '' }}">
+                <a href="{{ route('finance') }}" class="{{ $path === 'pengguna' ? 'active' : '' }}">
                     <span class="nav-icon"><i class="fa fa-fw fa-users"></i></span>
                     <span class="nav-title">Setup Pengguna</span>
                     <span class="nav-tools visible-xs"><i class="fa fa-fw arrow"></i></span>
@@ -39,7 +39,7 @@
             <!-- END: table -->
 
             <li>
-                <a href="javascript:;" class="{{ $path === 'keuangan' ? 'active' : '' }}">
+                <a href="{{ route('finance') }}" class="{{ $path === 'keuangan' ? 'active' : '' }}">
                     <span class="nav-icon"><i class="fa fa-fw fa-calendar"></i></span>
                     <span class="nav-title">Peristiwa Keuangan</span>
                     <span class="nav-tools visible-xs"><i class="fa fa-fw arrow"></i></span>

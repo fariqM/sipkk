@@ -22,7 +22,15 @@ Route::namespace('App\Http\Controllers')->group(function(){
             Route::post('setup', 'AccountCategoryController@store');
             Route::get('parent-update/{account:id}', 'AccountController@parentShow');
             Route::post('parent-update/{account:id}/update', 'AccountController@parentUpdate')->name('parent.update');
-            Route::get('child-update', 'AccountController@childtShow');
+            Route::get('child-update/{id}', 'AccountController@childShow');
+            Route::post('child-update/{accountcategory:id}/update', 'AccountController@childUpdate')->name('child.update');
+        });
+        Route::prefix('finance')->group(function(){
+            Route::get('index', 'FinanceController@index')->name('finance');
+            Route::get('create', 'FinanceController@create');
+            Route::post('store', 'FinanceController@store');
+            Route::get('show/{finance:id}', 'FinanceController@show');
+            Route::post('show/{finance:id}/update', 'FinanceController@update')->name('finance.update');
         });
         Route::get('/dasbor', [App\Http\Controllers\HomeController::class, 'index'])->name('dasbor');
     });
@@ -30,7 +38,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::middleware('guest')->group(function(){
         Route::get('/', function () {
             return view('auth.login');
-        })->name('account.test');
+        });
     });
 });
 

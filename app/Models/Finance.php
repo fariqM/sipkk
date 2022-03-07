@@ -17,4 +17,7 @@ class Finance extends Model
         'balance',
     ];
 
+    public function account(){
+        return $this->belongsTo(AccountCategory::class, 'account_category_id', 'id');
+    }
 }

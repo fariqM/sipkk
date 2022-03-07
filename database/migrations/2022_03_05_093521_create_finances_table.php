@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreignId('account_category_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->string('description');
-            $table->float('debit');
-            $table->float('credit');
-            $table->float('balance');
+            $table->text('description');
+            $table->double('debit')->nullable();
+            $table->double('credit')->nullable();
+            $table->double('balance')->nullable();
             $table->timestamps();
         });
     }

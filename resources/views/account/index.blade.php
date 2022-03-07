@@ -16,14 +16,15 @@
             <header>
                 <h3>Indeks Rekening</h3>
                 <div class="box-tools">
-                    <a href="/account/create"  class="btn btn-flat btn-primary  u-posRelative" style="color: white">Tambahkan Rekening</a>
+                    <a href="/account/create" class="btn btn-flat btn-primary  u-posRelative"
+                        style="color: white">Tambahkan Rekening</a>
                 </div>
             </header>
             <div class="box-body">
                 <table id="accountTable" class="table table-striped table-bordered dataTable " width="100%"
                     cellspacing="0">
                     <thead>
-                        <tr >
+                        <tr>
                             <th>Expand</th>
                             <th>Kategori Rekening</th>
                             <th>Aksi</th>
@@ -48,14 +49,87 @@
 <script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.min.js') }}"></script>
 
 <script>
-    function hapusBuku (){
-        alert('ok')
+    function hapusBuku(id){
+        Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: "Aksi ini akan menghapus rekening terpilih.",
+                icon: 'warning',
+                cancelButtonText:'Tidak',
+                showCancelButton: true,
+                confirmButtonColor: '#C9302C',
+                cancelButtonColor: '#337AB7',
+                confirmButtonText: 'Ya, Hapus'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteChild(id).then(response => {
+                        var table = $('#accountTable').DataTable();
+                        table.ajax.reload();
+                    }) 
+                }
+            })
+    }
+
+    const deleteChild = async (id) => {
+        await 
+        $.ajax({
+           type:'DELETE',
+           url:"/api/delete-child-account",
+           data:{id:id},
+           success:(response) => {
+                Swal.fire(
+                    'Sukses!',
+                    'Berhasil terhapus.',
+                    'success'
+                )
+                return response
+            },
+           error:(e) =>{
+               console.log(e);
+                Swal.fire(
+                    'Gagal!',
+                    'Ada yang error.',
+                    'success'
+                )
+                return e
+           }
+        });
+    }
+
+    const deleteParent = async (id) => {
+        await 
+        $.ajax({
+           type:'DELETE',
+           url:"/api/delete-account",
+           data:{id:id},
+           success:(response) => {
+                Swal.fire(
+                    'Sukses!',
+                    'Berhasil terhapus.',
+                    'success'
+                )
+                return response
+            },
+           error:(e) =>{
+               console.log(e);
+                Swal.fire(
+                    'Gagal!',
+                    'Ada yang error.',
+                    'success'
+                )
+                return e
+           }
+        });
+    }
+
+    const editChild = (id) => {
+        window.location = `/account/child-update/${id}`
     }
 
     function format ( d ) {
         let row = ''
         d.categories.forEach(element => {
-           row +=`<tr><td>${element.code}</td><td>${element.title}</td><td><button class='btn-flat btn-danger' onclick="hapusBuku()">Hapus Buku</button></td></tr>`
+           row +=`<tr><td>${element.code}</td><td>${element.title}</td><td><button style='margin-right:1rem' class='btn-flat btn-danger' onclick="hapusBuku(${element.id})">Hapus Buku</button>
+            <button style='margin-right:1rem' class='btn-flat btn-primary' onclick="editChild(${element.id})">Ubah</button></td></tr>`
         });
         // `d` is the original data object for the row
         return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="table table-striped-expand  table-bordered">'+
@@ -120,12 +194,9 @@
                 confirmButtonText: 'Ya, Hapus'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    table.ajax.reload();
-                    Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
+                    deleteParent(data.id).then(response => {
+                        table.ajax.reload();
+                    }) 
                 }
             })
         });

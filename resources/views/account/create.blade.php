@@ -25,7 +25,7 @@
                 <div class="box-body collapse in">
                     <form action="/account/setup" method="POST">
                         @csrf
-                        <div class="form-group col-md-6 ">
+                        <div class="form-group col-md-7 ">
                             <label for="atext">Katergori Buku Rekening</label>
                             <div style="display: inline-table">
                                 <select class="form-control" id="category" name="category">
@@ -38,7 +38,7 @@
                                     onclick="addCategory()">Tambahkan Kategori</span>
                             </div>
                         </div>
-                        <div class="form-group col-md-6 ">
+                        <div class="form-group col-md-7 ">
                             <label for="atext">Nama Rekening</label>
                             <input type="text" class="form-control input-sm" id="atext" name="account"
                                 placeholder="Masukkan Nama Rekening...">
