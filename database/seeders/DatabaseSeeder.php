@@ -57,6 +57,10 @@ class DatabaseSeeder extends Seeder
             'title' => 'KAS'
         ]);
 
+        Account::create([
+            'title' => 'PENERIMAAN'
+        ]);
+
         AccountCategory::create([
             'level' => 3,
             'account_id' => 1,
@@ -68,6 +72,25 @@ class DatabaseSeeder extends Seeder
             'account_id' => 1,
             'code' => '1.01.02',
             'title' => 'Kas Kecil Blok'
+        ]);
+
+        AccountCategory::create([
+            'level' => 3,
+            'account_id' => 2,
+            'code' => '2.01.01',
+            'title' => 'Kolekte'
+        ]);
+        AccountCategory::create([
+            'level' => 3,
+            'account_id' => 2,
+            'code' => '2.01.02',
+            'title' => 'Subsidi Paroki'
+        ]);
+        AccountCategory::create([
+            'level' => 3,
+            'account_id' => 2,
+            'code' => '2.01.03',
+            'title' => 'Lainnya'
         ]);
     }
 }

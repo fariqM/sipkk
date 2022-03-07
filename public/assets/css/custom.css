@@ -33,7 +33,17 @@ table.dataTable td.dt-control:before {
     background-color: #31b131
 }
 
-table.dataTable tr.dt-hasChild td.dt-control:before {
-    content: "-";
-    background-color: #d33333
+.row-haschild:before {
+    content: "-" !important;
+    background-color: #d33333 !important;
 }
+
+table.table-striped-expand {
+    background-color: #dff7ff !important;
+}
+
+
+/* .table-striped-expand>tbody>tr>td,
+.table-striped-expand>tbody>tr>th {
+    background-color: #dff7ff;
+} */

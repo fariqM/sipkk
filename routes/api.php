@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::namespace('App\Http\Controllers')->group(function(){
     Route::get('account-data', 'AccountController@index_data');
+    Route::post('add-account', 'AccountController@store');
 });

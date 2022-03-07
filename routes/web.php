@@ -18,6 +18,11 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::middleware('auth')->group(function(){
         Route::prefix('account')->group(function(){
             Route::get('index', 'AccountController@index')->name('account');
+            Route::get('create', 'AccountController@create');
+            Route::post('setup', 'AccountCategoryController@store');
+            Route::get('parent-update/{account:id}', 'AccountController@parentShow');
+            Route::post('parent-update/{account:id}/update', 'AccountController@parentUpdate')->name('parent.update');
+            Route::get('child-update', 'AccountController@childtShow');
         });
         Route::get('/dasbor', [App\Http\Controllers\HomeController::class, 'index'])->name('dasbor');
     });
