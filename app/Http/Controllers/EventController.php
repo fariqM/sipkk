@@ -59,7 +59,8 @@ class EventController extends Controller
         }
     }
 
-    public function show(Income $income){
+    public function show(Income $income)
+    {
         $path = 'kegiatan';
         $users = DB::table('users')->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->whereNull('model_has_roles.role_id')->orWhere('model_has_roles.role_id', '!=', '1')
@@ -82,7 +83,8 @@ class EventController extends Controller
         }
     }
 
-    public function childUpdate(Income $income, EventRequest $request){
+    public function childUpdate(Income $income, EventRequest $request)
+    {
         $array_store = array_merge($request->all(), [
             'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
         ]);
@@ -96,7 +98,17 @@ class EventController extends Controller
             $child  = Income::where('event_id',  $event->id);
             $child->delete();
             $event->delete();
-            return response(['success' => $event]);
+            return response(['success' => true]);
+        } catch (\Throwable $th) {
+            return response(['success' => false, 'error' => $th->getMessage()]);
+        }
+    }
+
+    public function destroyChild(Income $income)
+    {
+        try {
+            $income->delete();
+            return response(['success' => true]);
         } catch (\Throwable $th) {
             return response(['success' => false, 'error' => $th->getMessage()]);
         }

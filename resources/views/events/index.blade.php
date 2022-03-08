@@ -100,6 +100,26 @@
             })
     }
 
+    const deleteChildAlert = (id) => {
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Aksi ini akan menghapus catatan donasi/transaksi terpilih.",
+            icon: 'warning',
+            cancelButtonText:'Tidak',
+            showCancelButton: true,
+            confirmButtonColor: '#C9302C',
+            cancelButtonColor: '#337AB7',
+            confirmButtonText: 'Ya, Hapus'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                deleteChild(id).then(response => {
+                    let table = $('#eventsTable').DataTable();
+                    table.ajax.reload();
+                }) 
+            }
+        })
+    }
+
     const alertSuccess = (message) => {
         Swal.fire(
             'Sukses!',
@@ -150,6 +170,21 @@
         });
     }
 
+    const deleteChild = async (id) => {
+        await 
+        $.ajax({
+           type:'DELETE',
+           url:`/api/delete-child-event/${id}`,
+           success:(response) => {
+                alertSuccess('Kegiatan berhasil dihapus')
+            },
+           error:(e) =>{
+                console.log(e);
+                alertError('Gagal menghapus data.')
+           }
+        });
+    }
+
     const updateParent = async (id, input) => {
         await
         $.ajax({
@@ -184,7 +219,7 @@
                         <td>${element.user.name}</td>
                         <td>Rp ${numberWithCommas(element.balance)}</td>
                         <td>
-                            <button style='margin-right:1rem' class='btn-flat btn-danger'>Hapus Catatan</button>
+                            <button style='margin-right:1rem' class='btn-flat btn-danger' onclick="deleteChildAlert(${element.id})">Hapus Catatan</button>
                             <button style='margin-right:1rem' class='btn-flat btn-primary' onclick="editChild(${element.id})">Ubah Catatan</button>
                         </td>
                     </tr>`

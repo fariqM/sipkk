@@ -33,4 +33,5 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::delete('delete-child-account', 'AccountController@destroyChild');
     Route::delete('delete-finance/{finance:id}', 'FinanceController@destroy');
     Route::delete('delete-event/{event:id}', 'EventController@destroyParent');
+    Route::delete('delete-child-event/{income:id}', 'EventController@destroyChild');
 });
