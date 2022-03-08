@@ -36,8 +36,9 @@
                     <li><a href="table-datatable.html">Datatables</a></li>
                 </ul>
             </li>
-            <!-- END: table -->
+            <!-- END: Setup Pengguna -->
 
+            <!-- BEGIN: Peristiwa Keuangan -->
             <li>
                 <a href="{{ route('finance') }}" class="{{ $path === 'keuangan' ? 'active' : '' }}">
                     <span class="nav-icon"><i class="fa fa-fw fa-calendar"></i></span>
@@ -45,6 +46,17 @@
                     <span class="nav-tools visible-xs"><i class="fa fa-fw arrow"></i></span>
                 </a>
             </li>
+            <!-- END: Peristiwa Keuangan -->
+
+            <!-- BEGIN: Kegiatan -->
+            <li>
+                <a href="{{ route('events') }}" class="{{ $path === 'kegiatan' ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa fa-fw fa-child"></i></span>
+                    <span class="nav-title">Kegiatan</span>
+                    <span class="nav-tools visible-xs"><i class="fa fa-fw arrow"></i></span>
+                </a>
+            </li>
+            <!-- END: Kegiatan -->
         </ul>
         <!-- END: nav-content -->
     </nav>

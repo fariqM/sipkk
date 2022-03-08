@@ -28,7 +28,8 @@
                                     id="category" name="account_category_id">
                                     <option value="" disabled selected>Pilih Kategori Rekening</option>
                                     @foreach ($data as $item)
-                                    @if ($item->id == old('account_category_id') || $item->id == $finance->account_category_id)
+                                    @if ($item->id == old('account_category_id') || $item->id ==
+                                    $finance->account_category_id)
                                     <option value="{{  $item->id }}" selected>{{ $item->title }} - ({{ $item->code }})
                                     </option>
                                     @endif
@@ -47,7 +48,7 @@
 
                         <div class="form-group col-md-7 ">
                             <label for="descForm">Keterangan</label>
-                            <input type="text" class="form-control input-sm @error('description') input-error @enderror"
+                            <input type="text" class="form-control  @error('description') input-error @enderror"
                                 id="descForm" name="description" placeholder="Masukkan Keterangan Keuangan..."
                                 value="{{ old('description') ? old('description') : $finance->description }}">
                             @error('description')
@@ -58,8 +59,8 @@
                         <div class="form-group col-md-7 ">
                             <label for="debitForm">Debet</label>
                             <input type="number" step="0.01" min="0"
-                                class="form-control input-sm @error('debit') input-error @enderror" id="debitForm"
-                                name="debit" placeholder="Masukkan Debet Keuangan (jik ada)."
+                                class="form-control  @error('debit') input-error @enderror" id="debitForm" name="debit"
+                                placeholder="Masukkan Debet Keuangan (jik ada)."
                                 value="{{ old('debit') ? old('debit') : $finance->debit }}">
                             @error('debit')
                             <label class="label-error" for="debitForm">{{ $message }}</label>
@@ -69,7 +70,7 @@
                         <div class="form-group col-md-7 ">
                             <label for="creditForm">Kredit</label>
                             <input type="number" step="0.01" min="0"
-                                class="form-control input-sm @error('credit') input-error @enderror" id="creditForm"
+                                class="form-control  @error('credit') input-error @enderror" id="creditForm"
                                 name="credit" placeholder="Masukkan Kredit Keuangan (jik ada)."
                                 value="{{ old('credit') ? old('credit') : $finance->credit }}">
                             @error('credit')
@@ -80,7 +81,7 @@
                         <div class="form-group col-md-7 ">
                             <label for="balanceForm">Saldo</label>
                             <input type="number" step="0.01" min="0"
-                                class="form-control input-sm @error('balance') input-error @enderror" id="balanceForm"
+                                class="form-control  @error('balance') input-error @enderror" id="balanceForm"
                                 name="balance" placeholder="Masukkan Saldo Keuangan (jik ada)."
                                 value="{{ old('balance') ? old('balance') : $finance->balance }}">
                             @error('balance')

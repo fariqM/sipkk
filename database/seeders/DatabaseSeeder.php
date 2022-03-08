@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(1)->create();
         $role1 = Role::create(['name' => 'Super Admin']);
         $role2 = Role::create(['name' => 'Bendahara']);
         $role3 = Role::create(['name' => 'Pemantau']);
@@ -92,5 +91,7 @@ class DatabaseSeeder extends Seeder
             'code' => '2.01.03',
             'title' => 'Lainnya'
         ]);
+
+        \App\Models\User::factory(5)->create();
     }
 }

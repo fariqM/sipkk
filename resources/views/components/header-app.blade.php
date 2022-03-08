@@ -16,12 +16,12 @@
                 <!--end logo-->
             </div>
             <!-- END: .navbar-header-left with image -->
-            {{-- <nav class="nav navbar-header-nav">
+            <nav class="nav navbar-header-nav">
                 <a class="visible-xs b-r" href="#top-nav-list" data-toggle=collapse>
                     <i class="fa fa-fw fa-bars"></i>
                 </a>
 
-                <form class="navbar-form hidden-xs b-r">
+                {{-- <form class="navbar-form hidden-xs b-r">
                     <div class="icon-after-input">
                         <input type="text" class="form-control" placeholder="Search">
                         <div class="icon">
@@ -30,9 +30,9 @@
                             </a>
                         </div>
                     </div>
-                </form>
+                </form> --}}
 
-            </nav> --}}
+            </nav>
 
             <ul class="nav navbar-header-nav m-l-a">
                 <li class="visible-xs b-l">

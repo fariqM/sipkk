@@ -10,4 +10,7 @@ class Event extends Model
     use HasFactory;
     protected $fillable= ['description'];
 
+    public function incomes(){
+        return $this->hasMany(Income::class);
+    }
 }

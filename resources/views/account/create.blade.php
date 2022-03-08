@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group col-md-7 ">
                             <label for="atext">Nama Rekening</label>
-                            <input type="text" class="form-control input-sm" id="atext" name="account"
+                            <input type="text" class="form-control" id="atext" name="account"
                                 placeholder="Masukkan Nama Rekening...">
                         </div>
                         <div class="form-group col-md-12">

@@ -29,7 +29,7 @@
                             <label for="atext">Kategori Rekening</label>
 
                             <input type="text"
-                                class="form-control input-sm @error('title') input-error @enderror" " id=" titleForm"
+                                class="form-control @error('title') input-error @enderror" " id=" titleForm"
                                 name="title" value="{{ $account->title }}"
                                 placeholder="Ganti Nama Kategori Rekening Baru...">
                             @error('title')

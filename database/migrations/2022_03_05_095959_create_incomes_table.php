@@ -19,7 +19,8 @@ return new class extends Migration
             $table->foreignId('event_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->float('balance');
+            $table->double('balance');
+            $table->date('date');
             $table->timestamps();
         });
     }

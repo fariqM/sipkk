@@ -46,7 +46,7 @@
 
                         <div class="form-group col-md-7 ">
                             <label for="descForm">Keterangan</label>
-                            <input type="text" class="form-control input-sm @error('description') input-error @enderror"
+                            <input type="text" class="form-control @error('description') input-error @enderror"
                                 id="descForm" name="description" placeholder="Masukkan Keterangan Keuangan..."
                                 value="{{ old('description') }}">
                             @error('description')
@@ -57,7 +57,7 @@
                         <div class="form-group col-md-7 ">
                             <label for="debitForm">Debet</label>
                             <input type="number" step="0.01" min="0"
-                                class="form-control input-sm @error('debit') input-error @enderror" id="debitForm"
+                                class="form-control @error('debit') input-error @enderror" id="debitForm"
                                 name="debit" placeholder="Masukkan Debet (jik ada)." value="{{ old('debit') }}">
                             @error('debit')
                             <label class="label-error" for="debitForm">{{ $message }}</label>
@@ -67,7 +67,7 @@
                         <div class="form-group col-md-7 ">
                             <label for="creditForm">Kredit</label>
                             <input type="number" step="0.01" min="0"
-                                class="form-control input-sm @error('credit') input-error @enderror" id="creditForm"
+                                class="form-control @error('credit') input-error @enderror" id="creditForm"
                                 name="credit" placeholder="Masukkan Kredit (jik ada)." value="{{ old('credit') }}">
                             @error('credit')
                             <label class="label-error" for="creditForm">{{ $message }}</label>
@@ -77,7 +77,7 @@
                         <div class="form-group col-md-7 ">
                             <label for="balanceForm">Saldo</label>
                             <input type="number" step="0.01" min="0"
-                                class="form-control input-sm @error('balance') input-error @enderror" id="balanceForm"
+                                class="form-control @error('balance') input-error @enderror" id="balanceForm"
                                 name="balance" placeholder="Masukkan Saldo (jik ada)." value="{{ old('balance') }}">
                             @error('balance')
                             <label class="label-error" for="balanceForm">{{ $message }}</label>
