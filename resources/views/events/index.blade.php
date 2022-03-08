@@ -51,6 +51,75 @@
 <script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.min.js') }}"></script>
 
+{{-- show modal/alert script --}}
+<script>
+    const deleteAlert = (data) => {
+        // console.log(data);
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Aksi ini akan menghapus catatan donasi/transaksi yang terkait dengan kegiatan ini.",
+            icon: 'warning',
+            cancelButtonText:'Tidak',
+            showCancelButton: true,
+            confirmButtonColor: '#C9302C',
+            cancelButtonColor: '#337AB7',
+            confirmButtonText: 'Ya, Hapus'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                deleteParent(data.id).then(response => {
+                    let table = $('#eventsTable').DataTable();
+                    table.ajax.reload();
+                }) 
+            }
+        })
+    }
+
+    const updateAlert = (data) => {
+        Swal.fire({
+            title: 'Ubah nama kegiatan ?',
+            text: "Masukkan nama kegiatan yang baru",
+            html:`Nama kegiatan sebelumnya : <b>${data.description}</b>.</br>`+
+            `Masukkan nama kegiatan yang baru.`,
+            input:'text',
+            icon: 'question',
+            cancelButtonText:'Batalkan',
+            showCancelButton: true,
+            confirmButtonColor: '#337AB7',
+            cancelButtonColor: '#6A6A6A',
+            confirmButtonText: 'Ubah',
+            preConfirm: (input) => {
+                if (input==="" || input===null) {
+                    alertError('Input kosong!')
+                } else {
+                    updateParent(data.id, input).then(response => {
+                        let table = $('#eventsTable').DataTable();
+                        table.ajax.reload()
+                    })
+                }
+            },
+            })
+    }
+
+    const alertSuccess = (message) => {
+        Swal.fire(
+            'Sukses!',
+            message,
+            'success'
+        )
+    }
+
+    const alertError = (message) => {
+        Swal.fire(
+            'gagal!',
+            message,
+            'error'
+        )
+    }
+</script>
+{{-- end show modal/alert script --}}
+
+
+{{-- action script --}}
 <script>
     const customDateFormat = (date) => {
         // console.log(date);
@@ -66,7 +135,45 @@
 		return parts.join(".");
     }
 
+    const deleteParent = async (id) => {
+        await 
+        $.ajax({
+           type:'DELETE',
+           url:`/api/delete-event/${id}`,
+           success:(response) => {
+                alertSuccess('Kegiatan berhasil dihapus')
+            },
+           error:(e) =>{
+                console.log(e);
+                alertError('Gagal menghapus data.')
+           }
+        });
+    }
 
+    const updateParent = async (id, input) => {
+        await
+        $.ajax({
+           type:'POST',
+           url:`/api/update-event/${id}`,
+           data:{description:input},
+           success:(response) => {
+                alertSuccess('Nama kegiatan berhasil diganti')
+                return response
+            },
+           error:(e) =>{
+                console.log(e);
+                alertError('Gagal mengganti nama kegiatan.')
+           }
+        });
+    }
+
+    const editChild = (id) => {
+        window.location = `/event/update/${id}`
+    }
+</script>
+
+{{-- creating datatable --}}
+<script>
     function format ( d ) {
         // console.log(d);
         if (d.incomes.length>0) {
@@ -77,8 +184,8 @@
                         <td>${element.user.name}</td>
                         <td>Rp ${numberWithCommas(element.balance)}</td>
                         <td>
-                            <button style='margin-right:1rem' class='btn-flat btn-danger' onclick="hapusBuku(${element.id})">Hapus Buku</button>
-                            <button style='margin-right:1rem' class='btn-flat btn-primary' onclick="editChild(${element.id})">Ubah</button>
+                            <button style='margin-right:1rem' class='btn-flat btn-danger'>Hapus Catatan</button>
+                            <button style='margin-right:1rem' class='btn-flat btn-primary' onclick="editChild(${element.id})">Ubah Catatan</button>
                         </td>
                     </tr>`
             });
@@ -113,7 +220,7 @@
        
     }
 
-
+    // #### start create datatable ####
     $(document).ready(function() {
         var table = $('#eventsTable').DataTable( {
             "ajax": {
@@ -145,28 +252,13 @@
         // update action
         $('#eventsTable tbody').on('click', '#update', function () {
             var data = table.row( $(this).parents('tr') ).data();
-            window.location = `/account/parent-update/${data.id}`
+            updateAlert(data)
         });
 
         // delete action
         $('#eventsTable tbody').on('click', '#delete', function () {
             var data = table.row( $(this).parents('tr') ).data();
-            Swal.fire({
-                title: 'Yakin ingin menghapus?',
-                text: "Aksi ini akan menghapus semua nomor rekening yang termasuk dalam kategori.",
-                icon: 'warning',
-                cancelButtonText:'Tidak',
-                showCancelButton: true,
-                confirmButtonColor: '#C9302C',
-                cancelButtonColor: '#337AB7',
-                confirmButtonText: 'Ya, Hapus'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    deleteParent(data.id).then(response => {
-                        table.ajax.reload();
-                    }) 
-                }
-            })
+            deleteAlert(data)
         });
         
         // Add event listener for opening and closing details
@@ -188,5 +280,7 @@
                 }
             });
     });
+    // #### end create datatable ####
+
 </script>
 @endsection

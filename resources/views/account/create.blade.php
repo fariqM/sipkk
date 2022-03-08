@@ -69,7 +69,7 @@
         }
     });
 
-    const LogOut = (data) => {
+    const addAccount = (data) => {
         $.ajax({
            type:'POST',
            url:"/api/add-account",
@@ -118,7 +118,7 @@
                         'error'
                     )
                 } else {
-                    LogOut(data)
+                    addAccount(data)
                 }
             },
         })

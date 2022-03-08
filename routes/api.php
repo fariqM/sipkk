@@ -25,8 +25,12 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::get('events-data', 'EventController@indexAPI');
 
     Route::post('add-account', 'AccountController@store');
+    Route::post('add-event', 'EventController@addEventAPI');
+    Route::post('update-event/{event:id}', 'EventController@update');
+
 
     Route::delete('delete-account', 'AccountController@destroyParent');
     Route::delete('delete-child-account', 'AccountController@destroyChild');
     Route::delete('delete-finance/{finance:id}', 'FinanceController@destroy');
+    Route::delete('delete-event/{event:id}', 'EventController@destroyParent');
 });

@@ -7,7 +7,7 @@
 
 @section('content')
 <x-header-content>
-    <a href="/event/index">Kegiatan</a> / Tambah Kegiatan
+    <a href="/event/index">Kegiatan</a> / Ubah Detil Kegiatan
 </x-header-content>
 
 <div class="main-content bg-clouds">
@@ -24,7 +24,7 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="/event/store" method="POST">
+                    <form action="{{ route('event.update', ['income' => $income->id]) }}" method="POST">
                         @csrf
 
                         <div class="form-group col-md-7 ">
@@ -34,7 +34,9 @@
                                     <i class="fa fa-fw fa-calendar-plus-o"></i>
                                 </span>
                                 <input class="form-control @error('date') input-error @enderror" id="date" name="date"
-                                    placeholder="Masukkan Tanggal Pemberian." value="{{ old('date') }}">
+                                    placeholder="Masukkan Tanggal Pemberian."
+                                    value="{{ old('date') ? old('date') : date_format(date_create_from_format(" Y-m-d",
+                                    $income->date), 'd/m/Y') }}">
                             </div>
                             {{-- <label class="label-error" for="user_id">tes</label> --}}
 
@@ -50,10 +52,11 @@
                                     name="event_id">
                                     <option value="" disabled selected>Pilih Kegiatan</option>
                                     @foreach ($events as $item)
-                                    @if (old('event_id') == $item->id)
+                                    @if (old('event_id') == $item->id || $income->event_id == $item->id)
                                     <option value="{{  $item->id }}" selected>{{ $item->description }}</option>
-                                    @endif
+                                    @else
                                     <option value="{{  $item->id }}">{{ $item->description }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 @role('Super Admin')
@@ -74,10 +77,11 @@
                                     name="user_id">
                                     <option value="" disabled selected>Pilih Nama Pemberi</option>
                                     @foreach ($users as $item)
-                                    @if (old('user_id') == $item->id)
+                                    @if (old('user_id') == $item->id || $income->user_id == $item->id)
                                     <option value="{{  $item->id }}" selected>{{ $item->name }}</option>
-                                    @endif
+                                    @else
                                     <option value="{{  $item->id }}">{{ $item->name }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 @role('Super Admin')
@@ -98,7 +102,7 @@
                                 </span>
                                 <input class="form-control text-right @error('balance') input-error @enderror"
                                     id="balance" name="balance" placeholder="Masukkan Nominal Pemberian."
-                                    value="{{ old('balance') }}">
+                                    value="{{ old('balance') ?  old('balance') : $income->balance }}">
                                 {{-- <input id="balance" type="text" class="text-right cleave-cpr1 form-control"
                                     placeholder="Enter Numeral" aria-describedby="cpr1"> --}}
                             </div>

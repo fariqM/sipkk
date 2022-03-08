@@ -36,6 +36,8 @@ Route::namespace('App\Http\Controllers')->group(function(){
             Route::get('index', 'EventController@index')->name('events');
             Route::get('create', 'EventController@create');
             Route::post('store', 'EventController@store');
+            Route::get('update/{income:id}', 'EventController@show')->name('event.show');
+            Route::post('update/{income:id}/store', 'EventController@childUpdate')->name('event.update');
         });
         Route::get('/dasbor', [App\Http\Controllers\HomeController::class, 'index'])->name('dasbor');
     });
