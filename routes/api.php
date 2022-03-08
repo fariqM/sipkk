@@ -27,6 +27,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::post('add-account', 'AccountController@store');
     Route::post('add-event', 'EventController@addEventAPI');
     Route::post('update-event/{event:id}', 'EventController@update');
+    // Route::post('add-role', 'UserController@addRole');
 
 
     Route::delete('delete-account', 'AccountController@destroyParent');
@@ -34,4 +35,5 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::delete('delete-finance/{finance:id}', 'FinanceController@destroy');
     Route::delete('delete-event/{event:id}', 'EventController@destroyParent');
     Route::delete('delete-child-event/{income:id}', 'EventController@destroyChild');
+    Route::delete('delete-user/{user:id}', 'UserController@destroy');
 });

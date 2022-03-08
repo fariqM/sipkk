@@ -25,16 +25,11 @@
 
             <!-- BEGIN: Setup Pengguna -->
             <li>
-                <a href="{{ route('finance') }}" class="{{ $path === 'pengguna' ? 'active' : '' }}">
+                <a href="{{ route('users') }}" class="{{ $path === 'pengguna' ? 'active' : '' }}">
                     <span class="nav-icon"><i class="fa fa-fw fa-users"></i></span>
                     <span class="nav-title">Setup Pengguna</span>
                     <span class="nav-tools visible-xs"><i class="fa fa-fw arrow"></i></span>
                 </a>
-                <ul class="nav nav-sub nav-stacked">
-                    <li><a href="table-basic.html">Basic</a></li>
-                    <li><a href="table-sortable.html">Sortable</a></li>
-                    <li><a href="table-datatable.html">Datatables</a></li>
-                </ul>
             </li>
             <!-- END: Setup Pengguna -->
 

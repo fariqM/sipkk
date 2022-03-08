@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->constrained();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->foreignId('event_id')
                 ->constrained()
                 ->onDelete('cascade');

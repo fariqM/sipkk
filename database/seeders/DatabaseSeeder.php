@@ -92,6 +92,6 @@ class DatabaseSeeder extends Seeder
             'title' => 'Lainnya'
         ]);
 
-        \App\Models\User::factory(5)->create();
+        // \App\Models\User::factory(5)->create();
     }
 }

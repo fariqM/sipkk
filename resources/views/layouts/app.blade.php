@@ -32,7 +32,8 @@
     <!-- END: theme-switcher stylesheet file. -->
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/highlight/styles/atom-one-dark.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('assets/vendor/perfect-scrollbar/perfect-scrollbar.min.css') }}">
+    <link type="text/css" rel="stylesheet"
+        href="{{ asset('assets/vendor/perfect-scrollbar/perfect-scrollbar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
     @yield('css')
@@ -85,15 +86,13 @@
     <span class="fa fa-angle-up" id="totop" data-plugin="totop"></span>
 
     <!-- begin theme-switcher. DEMO ONLY! -->
-    <div class="canvas is-right is-fixed bg-white shadow-4dp" id="style-switcher">
+    {{-- <div class="canvas is-right is-fixed bg-white shadow-4dp" id="style-switcher">
         <div class="h1 demo-header shadow-4dp" data-target="#style-switcher" data-toggle="canvas">
             <i class="fa fa-fw fa-cog"></i>
         </div>
         <div class=p-a-15>
 
             <div>
-
-                <!-- Nav tabs -->
                 <ul class="nav nav-bordered nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#page" aria-controls="page" role="tab"
                             data-toggle="tab">Page</a></li>
@@ -101,7 +100,7 @@
                             data-toggle="tab">Theme</a></li>
                 </ul>
 
-                <!-- Tab panes -->
+               
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="page">
                         <form class="p-a-15" id="page-form">
@@ -189,23 +188,18 @@
                         <nav class="theme-list u-flex u-flexWrap u-flexRow u-flexJustifyBetween">
                             <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-peter-river.css') }}">
                                 peter-river
-                                {{-- <img src="assets/img/theme-peter-river.svg" alt="peter-river"> --}}
                             </a>
                             <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-turquoise.css') }}">
                                 turquoise
-                                {{-- <img src="assets/img/theme-turquoise.svg" alt="turquoise"> --}}
                             </a>
                             <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-amethyst.css') }}">
                                 amethyst
-                                {{-- <img src="assets/img/theme-amethyst.svg"> --}}
                             </a>
                             <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-orange.css') }}">
                                 orange
-                                {{-- <img src="assets/img/theme-orange.svg" alt="orange"> --}}
                             </a>
                             <a class="m-v-5" href="#" rel="{{ asset('assets/css/theme-alizarin.css') }}">
                                 alizarin
-                                {{-- <img src="assets/img/theme-alizarin.svg" alt="alizarin"> --}}
                             </a>
                         </nav>
                     </div>
@@ -213,7 +207,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- END: theme-switcher. -->
 
 

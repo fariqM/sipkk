@@ -39,6 +39,14 @@ Route::namespace('App\Http\Controllers')->group(function(){
             Route::get('update/{income:id}', 'EventController@show')->name('event.show');
             Route::post('update/{income:id}/store', 'EventController@childUpdate')->name('event.update');
         });
+        Route::prefix('user')->group(function(){
+            Route::get('users-data', 'UserController@IndexAPI');
+            Route::get('index', 'UserController@index')->name('users');
+            Route::get('create', 'UserController@create');
+            Route::post('store', 'UserController@store');
+            Route::get('update/{user:id}', 'UserController@show');
+            Route::post('update/{user:id}/store', 'UserController@update')->name('user.update');
+        });
         Route::get('/dasbor', [App\Http\Controllers\HomeController::class, 'index'])->name('dasbor');
     });
 
