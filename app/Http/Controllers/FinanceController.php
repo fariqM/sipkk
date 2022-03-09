@@ -31,10 +31,13 @@ class FinanceController extends Controller
 
     public function store(FinanceRequest $request)
     {
+        $array_store = array_merge($request->all(), [
+            'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
+        ]);
         //    $store_array = array_merge($request->all(), ['balance' =>  $request->debit-$request->credit]);
         //    dd($request->all());
 
-        Finance::create($request->all());
+        Finance::create($array_store);
 
         return redirect('/finance/index');
     }
@@ -47,7 +50,11 @@ class FinanceController extends Controller
     }
 
     public function update(Finance $finance, FinanceRequest $request){
-        $finance->update($request->all());
+        $array_store = array_merge($request->all(), [
+            'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
+        ]);
+
+        $finance->update($array_store);
         return redirect('/finance/index');
     }
 

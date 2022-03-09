@@ -28,6 +28,7 @@ class FinanceRequest extends FormRequest
             'description' => 'required',
             'debit' => 'required_without:credit',
             'credit' => 'required_without:debit',
+            'date' => 'required'
         ];
     }
 }

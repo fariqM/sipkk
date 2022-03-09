@@ -22,6 +22,7 @@ return new class extends Migration
             $table->double('debit')->nullable();
             $table->double('credit')->nullable();
             $table->double('balance')->nullable();
+            $table->date('date');
             $table->timestamps();
         });
     }

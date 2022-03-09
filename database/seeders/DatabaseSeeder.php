@@ -52,6 +52,24 @@ class DatabaseSeeder extends Seeder
         ]);
         $admin->assignRole('Super Admin');
 
+        $bendahara = User::create([
+            'name' => 'Bendahara',
+            'email' => 'bendahara@sipkk.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
+        $bendahara->assignRole('Bendahara');
+
+        $Pemantau = User::create([
+            'name' => 'Pemantau',
+            'email' => 'pemantau@sipkk.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
+        $Pemantau->assignRole('Pemantau');
+
         Account::create([
             'title' => 'KAS'
         ]);

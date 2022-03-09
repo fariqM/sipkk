@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+<link type="text/css" rel="stylesheet" href="{{ asset('assets/vendor/flatpickr/flatpickr.min.css') }}">
+@endsection
+
 @section('content')
 <x-header-content>
     <a href="/finance/index">Catatan Keuangan</a> / Tambah Data
@@ -10,7 +14,7 @@
         <div class="column bg-white is-flexible shadow-2dp ps">
             <div class="box">
                 <header class="bg-wet-asphalt text-white">
-                    <h4>Setup Rekening</h4>
+                    <h4>Tambah Catatan Keuangan</h4>
                     <!-- begin box-tools -->
                     <div class="box-tools">
                         <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
@@ -21,6 +25,23 @@
                 <div class="box-body collapse in">
                     <form action="/finance/store" method="POST">
                         @csrf
+
+                        <div class="form-group col-md-7 ">
+                            <label for="date">Tanggal</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="cd1">
+                                    <i class="fa fa-fw fa-calendar-plus-o"></i>
+                                </span>
+                                <input class="form-control @error('date') input-error @enderror" id="date" name="date"
+                                    placeholder="Masukkan Tanggal Pembukuan." value="{{ old('date') }}">
+                            </div>
+                            {{-- <label class="label-error" for="user_id">tes</label> --}}
+
+                            @error('date')
+                            <label class="label-error" for="date">{{ $message }}</label>
+                            @enderror
+                        </div>
+
                         <div class="form-group col-md-7 ">
                             <label for="atext">Katergori Buku Rekening</label>
                             <div style="display: inline-table">
@@ -94,4 +115,23 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script src="{{ asset('assets/vendor/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ asset('assets/vendor/cleave/cleave.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/cleave/addons/cleave-phone.us.js') }}"></script>
+
+{{-- custom input --}}
+<script>
+    flatpickr("#date", {
+        dateFormat: "d/m/Y",
+    });
+    var cleave = new Cleave('#balance', {
+        prefix: 'Rp ',
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand'
+    });
+</script>
+{{-- end custom input --}}
 @endsection

@@ -20,7 +20,7 @@
                 <h3>Indeks Keuangan</h3>
                 <div class="box-tools">
                     <a href="/finance/create" class="btn btn-flat btn-primary  u-posRelative"
-                        style="color: white">Tambahkan Rekening</a>
+                        style="color: white">Tambahkan Catatan Keuangan</a>
                 </div>
             </header>
             <div class="box-body">
@@ -28,7 +28,7 @@
                     cellspacing="0">
                     <thead>
                         <tr>
-                            <th>TGl Pembukuan</th>
+                            <th>Tgl Pembukuan</th>
                             <th>Kode Buku</th>
                             <th>Keterangan</th>
                             <th>Debit</th>
@@ -40,7 +40,7 @@
                     <tbody>
                         @foreach ($data as $item)
                         <tr>
-                            <td>{{ $item->created_at->format('d/m/Y') }}</td>
+                            <td>{{ date_format(date_create_from_format("Y-m-d", $item->date), 'd/m/Y') }}</td>
                             <td>{{ $item->account->code }}</td>
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->debit }}</td>

@@ -15,6 +15,7 @@ class Finance extends Model
         'debit',
         'credit',
         'balance',
+        'date'
     ];
 
     public function account(){

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+<link type="text/css" rel="stylesheet" href="{{ asset('assets/vendor/flatpickr/flatpickr.min.css') }}">
+@endsection
+
 @section('content')
 <x-header-content>
     <a href="/account/index">Catatan Keuangan</a> / Ubah Data
@@ -21,6 +25,24 @@
                 <div class="box-body collapse in">
                     <form action="{{ route('finance.update', ['finance' => $finance->id]) }}" method="POST">
                         @csrf
+
+                        <div class="form-group col-md-7 ">
+                            <label for="date">Tanggal</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="cd1">
+                                    <i class="fa fa-fw fa-calendar-plus-o"></i>
+                                </span>
+                                <input class="form-control @error('date') input-error @enderror" id="date" name="date"
+                                    placeholder="Masukkan Tanggal Pembukuan." value="{{  old('date') ? old('date') : date_format(date_create_from_format(" Y-m-d",
+                                    $finance->date), 'd/m/Y') }}">
+                            </div>
+                            {{-- <label class="label-error" for="user_id">tes</label> --}}
+
+                            @error('date')
+                            <label class="label-error" for="date">{{ $message }}</label>
+                            @enderror
+                        </div>
+
                         <div class="form-group col-md-7 ">
                             <label for="atext">Katergori Buku Rekening</label>
                             <div style="display: inline-table">
@@ -99,4 +121,23 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script src="{{ asset('assets/vendor/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ asset('assets/vendor/cleave/cleave.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/cleave/addons/cleave-phone.us.js') }}"></script>
+
+{{-- custom input --}}
+<script>
+    flatpickr("#date", {
+        dateFormat: "d/m/Y",
+    });
+    var cleave = new Cleave('#balance', {
+        prefix: 'Rp ',
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand'
+    });
+</script>
+{{-- end custom input --}}
 @endsection
