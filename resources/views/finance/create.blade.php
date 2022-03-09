@@ -44,7 +44,7 @@
 
                         <div class="form-group col-md-7 ">
                             <label for="atext">Katergori Buku Rekening</label>
-                            <div style="display: inline-table">
+                            <div  @hasrole('Super Admin') style="display: inline-table"  @endhasrole>
                                 <select class="form-control @error('account_category_id') input-error @enderror"
                                     id="category" name="account_category_id">
                                     <option value="" disabled selected>Pilih Kategori Rekening</option>
@@ -55,10 +55,11 @@
                                     <option value="{{  $item->id }}">{{ $item->title }} - ({{ $item->code }})</option>
                                     @endforeach
                                 </select>
-                                
+                                @hasrole('Super Admin')
                                 <span class="input-group-addon" id="clear_addon" style="cursor: pointer">
                                     <a href="/account/create">Setup Rekening</a>
                                 </span>
+                                @endhasrole
                             </div>
                             @error('account_category_id')
                             <label class="label-error" for="category">{{ $message }}</label>

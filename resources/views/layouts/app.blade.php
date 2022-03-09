@@ -86,7 +86,7 @@
     <span class="fa fa-angle-up" id="totop" data-plugin="totop"></span>
 
     <!-- begin theme-switcher. DEMO ONLY! -->
-    {{-- <div class="canvas is-right is-fixed bg-white shadow-4dp" id="style-switcher">
+    <div class="canvas is-right is-fixed bg-white shadow-4dp" id="style-switcher">
         <div class="h1 demo-header shadow-4dp" data-target="#style-switcher" data-toggle="canvas">
             <i class="fa fa-fw fa-cog"></i>
         </div>
@@ -207,7 +207,7 @@
 
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- END: theme-switcher. -->
 
 
