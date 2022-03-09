@@ -75,7 +75,7 @@
            url:"/api/add-account",
            data:{title:data},
            success:(response) => {
-                // console.log(response);
+                console.log(response);
                 Swal.fire(
                     'Sukses!',
                     'Data berhasil ditambahkan!',

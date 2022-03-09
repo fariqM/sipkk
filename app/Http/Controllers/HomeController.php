@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Finance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $finance = Finance::with('account')->orderBy('created_at', 'desc')->get();
         $path = 'dasbor';
-        return view('dashboard', compact('path'));
+        return view('dashboard', compact('path', 'finance'));
     }
 }

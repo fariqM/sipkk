@@ -131,12 +131,12 @@
                     <a class="dropdown-toggle profile-pic" href="#" data-toggle="dropdown" role="button"
                         aria-haspopup="true" aria-expanded="false">
                         <img class="img-circle" src="{{ asset('assets/img/Dreamy Waze.png') }}" alt="Jane Doe">
-                        <b class="hidden-xs hidden-sm">Jane Doe</b>
+                        <b class="hidden-xs hidden-sm">{{ auth()->user()->name }}</b>
                     </a>
                     <ul class="dropdown-menu animated flipInY pull-right">
-                        <li>
+                        {{-- <li>
                             <a href="#">Profile</a>
-                        </li>
+                        </li> --}}
                         {{-- <li>
                             <a href="#">Contacts</a>
                         </li>
@@ -144,8 +144,8 @@
                             <a href="#">Mail Box</a>
                         </li> --}}
                         <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="#" onclick="LogOut()">
+                        <li onclick="LogOut()">
+                            <a href="#" >
                                 <i class="fa fa-fw fa-sign-out"></i>
                                 Logout
                             </a>
@@ -196,7 +196,7 @@
     </nav>
 </header>
 
-@section('js')
+@section('js-header')
 <script>
     $.ajaxSetup({
         headers: {

@@ -23,6 +23,11 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::get('account-data', 'AccountController@index_data');
     Route::get('finance-data', 'FinanceController@indexAPI');
     Route::get('events-data', 'EventController@indexAPI');
+    Route::get('debit-data', 'ChartController@debitData');
+    Route::get('credit-data', 'ChartController@creditData');
+    Route::get('balance-data', 'ChartController@balanceData');
+
+
 
     Route::post('add-account', 'AccountController@store');
     Route::post('add-event', 'EventController@addEventAPI');

@@ -215,6 +215,8 @@
     <script src="{{ asset('assets/js/vendor.js') }}"></script>
     <!-- END: Vendor javascript files -->
 
+    @yield('js')
+
     <script src="{{ asset('assets/js/chaldene.js') }}"></script>
 
     <!-- theme-switcher scripts file. NOT REQUIRED -->
@@ -234,7 +236,7 @@
     });
 
     </script>
-    @yield('js')
+    @yield('js-header')
 </body>
 
 </html>
