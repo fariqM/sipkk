@@ -86,7 +86,6 @@
            type:'DELETE',
            url:`/api/delete-finance/${id}`,
            success:(response) => {
-               console.log(response);
                 Swal.fire(
                     'Sukses!',
                     'Berhasil terhapus.',
@@ -129,7 +128,6 @@
             }) 
         }
     })
-    console.log(id);
 }
 </script>
 @endsection

@@ -99,7 +99,7 @@
 
     const addCategory = () => {
         Swal.fire({
-            title: 'Tambahkan Kategori Rekening',
+            title: 'Tambahkan Jenis Rekening',
             input: 'text',
             inputAttributes: {
                 autocapitalize: 'off'

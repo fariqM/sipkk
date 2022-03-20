@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FinanceRequest;
+use App\Models\Account;
 use App\Models\AccountCategory;
 use App\Models\Finance;
 use Illuminate\Http\Request;
@@ -26,7 +27,8 @@ class FinanceController extends Controller
     {
         $path = 'keuangan';
         $data = AccountCategory::get();
-        return view('finance.create', compact('path', 'data'));
+        $account = Account::get();
+        return view('finance.create', compact('path', 'data', 'account'));
     }
 
     public function store(FinanceRequest $request)
@@ -35,21 +37,23 @@ class FinanceController extends Controller
             'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
         ]);
         //    $store_array = array_merge($request->all(), ['balance' =>  $request->debit-$request->credit]);
-        //    dd($request->all());
+        // dd($request->all());
 
         Finance::create($array_store);
 
         return redirect('/finance/index');
     }
 
-    public function show(Finance $finance){
+    public function show(Finance $finance)
+    {
         $path = 'keuangan';
         $data = AccountCategory::get();
 
         return view('finance.update', compact('path', 'data', 'finance'));
     }
 
-    public function update(Finance $finance, FinanceRequest $request){
+    public function update(Finance $finance, FinanceRequest $request)
+    {
         $array_store = array_merge($request->all(), [
             'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
         ]);

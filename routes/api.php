@@ -26,6 +26,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::get('debit-data', 'ChartController@debitData');
     Route::get('credit-data', 'ChartController@creditData');
     Route::get('balance-data', 'ChartController@balanceData');
+    Route::get('sub-account-data/{account:id}', 'AccountController@childShowAPI');
 
 
 

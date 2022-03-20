@@ -24,6 +24,7 @@ class FinanceRequest extends FormRequest
     public function rules()
     {
         return [
+            'account_id' => 'required',
             'account_category_id' => 'required',
             'description' => 'required',
             'debit' => 'required_without:credit',

@@ -40,6 +40,11 @@ class AccountController extends Controller
         return view('account.parent-update', compact('account', 'path'));
     }
 
+    public function childShowAPI(Account $account){
+        $data = AccountCategory::where('account_id', $account->id)->get();
+        return response(['success' => true, 'data' => $data]);
+    }
+
     public function parentUpdate(Account $account, Request $request)
     {
         $validator = Validator::make($request->all(), [
