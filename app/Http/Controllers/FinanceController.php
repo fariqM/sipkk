@@ -68,7 +68,7 @@ class FinanceController extends Controller
             $finance->delete();
             return response(['success' => true]);
         } catch (\Throwable $th) {
-            return response(['success' => false, 'error' => $th->getMessage()]);
+            return response(['success' => false, 'error' => $th->getMessage()],500);
         }
     }
 }

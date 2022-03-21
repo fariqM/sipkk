@@ -25,12 +25,33 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         try {
-            $store =  Account::create([
-                'title' => $request->title
-            ]);
+            $count = Account::orderBy('idx', 'asc')->get();
+            $idx = null;
+            $array = [];
+            foreach ($count as $key => $value) {
+                array_push($array, $key);
+                if ($key + 1 !== $value->id) {
+                    $dataExits = Account::where('idx', $key + 1)->first();
+                    if (!$dataExits) {
+                        $idx = $key + 1;
+                        break;
+                    } 
+                }
+            }
+            if ($idx == null) {
+                $store =  Account::create([
+                    'title' => $request->title,
+                    'idx' => $count->count()+1,
+                ]);
+            } else {
+                $store =  Account::create([
+                    'title' => $request->title,
+                    'idx' => $idx,
+                ]);
+            }
             return response($store);
         } catch (\Throwable $th) {
-            return response(['success' => false, 'error' => $th->getMessage()]);
+            return response(['success' => false, 'error' => $th->getMessage()], 500);
         }
     }
 
@@ -40,7 +61,8 @@ class AccountController extends Controller
         return view('account.parent-update', compact('account', 'path'));
     }
 
-    public function childShowAPI(Account $account){
+    public function childShowAPI(Account $account)
+    {
         $data = AccountCategory::where('account_id', $account->id)->get();
         return response(['success' => true, 'data' => $data]);
     }
@@ -106,7 +128,7 @@ class AccountController extends Controller
             $parent->delete();
             return response(['success' => true]);
         } catch (\Throwable $th) {
-            return response(['success' => false, 'error' => $th->getMessage()]);
+            return response(['success' => false, 'error' => $th->getMessage()], 500);
         }
     }
     public function destroyChild(Request $request)
@@ -116,7 +138,7 @@ class AccountController extends Controller
             $child->delete();
             return response(['success' => true]);
         } catch (\Throwable $th) {
-            return response(['success' => false, 'error' => $th->getMessage()]);
+            return response(['success' => false, 'error' => $th->getMessage()], 500);
         }
     }
 }

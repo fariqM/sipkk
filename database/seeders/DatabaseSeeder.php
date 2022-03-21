@@ -71,11 +71,13 @@ class DatabaseSeeder extends Seeder
         $Pemantau->assignRole('Pemantau');
 
         Account::create([
-            'title' => 'KAS'
+            'title' => 'KAS',
+            'idx' => 1
         ]);
 
         Account::create([
-            'title' => 'PENERIMAAN'
+            'title' => 'PENERIMAAN',
+            'idx' => 2
         ]);
 
         AccountCategory::create([

@@ -9,7 +9,7 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['title'];
+    protected $fillable= ['title', 'idx'];
 
     public function categories(){
         return $this->hasMany(AccountCategory::class);

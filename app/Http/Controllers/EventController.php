@@ -55,7 +55,7 @@ class EventController extends Controller
             ]);
             return response($store);
         } catch (\Throwable $th) {
-            return response(['success' => false, 'error' => $th->getMessage()]);
+            return response(['success' => false, 'error' => $th->getMessage()],500);
         }
     }
 
@@ -100,7 +100,7 @@ class EventController extends Controller
             $event->delete();
             return response(['success' => true]);
         } catch (\Throwable $th) {
-            return response(['success' => false, 'error' => $th->getMessage()]);
+            return response(['success' => false, 'error' => $th->getMessage()],500);
         }
     }
 
@@ -110,7 +110,7 @@ class EventController extends Controller
             $income->delete();
             return response(['success' => true]);
         } catch (\Throwable $th) {
-            return response(['success' => false, 'error' => $th->getMessage()]);
+            return response(['success' => false, 'error' => $th->getMessage()],500);
         }
     }
 }

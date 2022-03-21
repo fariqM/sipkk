@@ -19,7 +19,7 @@ CREATE TABLE `account_categories` (
   PRIMARY KEY (`id`),
   KEY `account_categories_account_id_foreign` (`account_id`),
   CONSTRAINT `account_categories_account_id_foreign` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts` (
@@ -27,8 +27,9 @@ CREATE TABLE `accounts` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `idx` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
@@ -180,21 +181,16 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `account_categories` (`id`, `level`, `account_id`, `code`, `title`, `created_at`, `updated_at`) VALUES
 (1, 3, 1, '1.01.01', 'Kas Lingkungan', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
 INSERT INTO `account_categories` (`id`, `level`, `account_id`, `code`, `title`, `created_at`, `updated_at`) VALUES
 (2, 3, 1, '1.01.02', 'Kas Kecil Blok', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
-INSERT INTO `account_categories` (`id`, `level`, `account_id`, `code`, `title`, `created_at`, `updated_at`) VALUES
-(10, 2, 12, '12.01', 'nambah aja', '2022-03-09 03:47:37', '2022-03-09 03:47:37');
-INSERT INTO `account_categories` (`id`, `level`, `account_id`, `code`, `title`, `created_at`, `updated_at`) VALUES
-(11, 2, 12, '12.02', 'Invoice order', '2022-03-09 03:47:48', '2022-03-09 03:47:48');
 
-INSERT INTO `accounts` (`id`, `title`, `created_at`, `updated_at`) VALUES
-(1, 'KAS', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
-INSERT INTO `accounts` (`id`, `title`, `created_at`, `updated_at`) VALUES
-(12, 'buku besar', '2022-03-09 03:46:32', '2022-03-09 03:46:32');
+
+INSERT INTO `accounts` (`id`, `title`, `created_at`, `updated_at`, `idx`) VALUES
+(1, 'KAS', '2022-03-09 03:08:00', '2022-03-09 03:08:00', 1);
 
 
 INSERT INTO `events` (`id`, `description`, `created_at`, `updated_at`) VALUES
@@ -248,6 +244,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\User', 2);
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (3, 'App\\Models\\User', 3);
+INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
+(3, 'App\\Models\\User', 4);
 
 
 
@@ -283,11 +281,13 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 (3, 'Pemantau', 'web', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@admin.com', '2022-03-09 03:08:00', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'kFre2BFZ7RZJJTPYICYWSktJf5rfcRBr9CK9UZAtFKFUQGZWbA1g5e6X43oY', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
+(1, 'Admin', 'admin@admin.com', '2022-03-09 03:08:00', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'NGkHA6aLREfya2RpfCiLXCxtsVbEvzDA2q3ZLuEQLmlkJs7bhvjfba599zFn', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'Bendahara', 'bendahara@sipkk.com', '2022-03-09 03:08:00', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ILUQM3L7JF', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
+(2, 'Rita si Bendahara', 'bendahara@sipkk.com', '2022-03-09 03:08:00', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'QPcCjZNjSfH12TueGg1lb8JDWQafG1jF8K1chKl8zm5tK72gFJYw7dZDLDr0', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(3, 'Pemantau', 'pemantau@sipkk.com', '2022-03-09 03:08:00', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'RwDU04XdG42FbYqABPmlsaFgbA28KsnaS74HSZRQR9zvYQP0yXVxW4gW5X2c', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
+(3, 'Cak nan si Pemantau', 'pemantau@sipkk.com', '2022-03-09 03:08:00', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'SglFkFZT9FJBqu5i8N573rzHOzdY4SLwvRiSH0aJGgwJ5CTWqqUu90yqbGyi', '2022-03-09 03:08:00', '2022-03-09 03:08:00');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(4, 'DR. Strange', 'watowyginu@mailinator.com', NULL, '$2y$10$wyKbNMMlDAAoyeTk/7qgUeeD3yJcADJxwy1L74w32KlVp8rcfmX6q', NULL, '2022-03-09 08:24:30', '2022-03-09 08:26:09');
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
