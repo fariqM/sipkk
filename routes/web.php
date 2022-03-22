@@ -37,8 +37,9 @@ Route::namespace('App\Http\Controllers')->group(function(){
         });
         Route::group(['middleware' => ['role:Super Admin|Bendahara']], function () {
             Route::prefix('finance')->group(function(){
-                Route::get('index', 'FinanceController@index')->name('finance');
-                Route::get('create', 'FinanceController@create');
+                Route::get('main', 'FinanceController@main')->name('finance');
+                Route::get('index/{slug}', 'FinanceController@index');
+                Route::get('create/{slug}', 'FinanceController@create');
                 Route::post('store', 'FinanceController@store');
                 Route::get('show/{finance:id}', 'FinanceController@show');
                 Route::post('show/{finance:id}/update', 'FinanceController@update')->name('finance.update');

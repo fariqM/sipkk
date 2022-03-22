@@ -15,7 +15,7 @@
         <div class="column bg-white is-flexible shadow-2dp ps">
             <div class="box">
                 <header class="bg-wet-asphalt text-white">
-                    <h4>Tambah Catatan Keuangan</h4>
+                    <h4>Tambah Catatan Keuangan {{ $account->title }}</h4>
                     <!-- begin box-tools -->
                     <div class="box-tools">
                         <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
@@ -48,14 +48,7 @@
                             <div @hasrole('Super Admin') style="display: inline-table" @endhasrole>
                                 <select class="form-control @error('account_id') input-error @enderror"
                                     onchange="selectAccount(0)" id="account_drop" name="account_id">
-                                    <option value="" disabled selected>Pilih Jenis Kategori Rekening</option>
-                                    @foreach ($account as $item)
-                                    @if ($item->id == old('account_id'))
-                                    <option value="{{  $item->id }}" selected>{{ $item->title }}</option>
-                                    @else
-                                    <option value="{{  $item->id }}">{{ $item->title }}</option>
-                                    @endif
-                                    @endforeach
+                                    <option value="{{  $account->id }}" selected>{{ $account->title }}</option>
                                 </select>
                                 @hasrole('Super Admin')
                                 <span class="input-group-addon" id="clear_addon" onclick="addAccount()"
@@ -74,13 +67,10 @@
                             <div @hasrole('Super Admin') style="display: inline-table" @endhasrole>
                                 <select class="form-control @error('account_category_id') input-error @enderror"
                                     id="subaccount" name="account_category_id">
-                                    @if (old('account_category_id'))
-                                    <option value="" disabled>Pilih Sub Rekening</option>
-                                    <option value="{{  old('account_category_id') }}" selected>Loading...</option>
-                                    @else
                                     <option value="" disabled selected>Pilih Sub Rekening</option>
-                                    @endif
-
+                                    @foreach ($data as $item)
+                                        <option value="{{  $item->id }}">{{ $item->code }} ({{ $item->title }})</option>
+                                    @endforeach
                                 </select>
                                 @hasrole('Super Admin')
                                 <span class="input-group-addon" id="clear_addon"
@@ -211,7 +201,7 @@
                     .append(`<option value="${element.id}">${element.title} - (${element.code})</option>`);
             });
         }
-    } 
+    }
 
     const addAccountAction = (data) => {
         // console.log('add');
@@ -241,109 +231,6 @@
         });
     }
 
-    const selectAccount = (selectParam) =>{
-        $.ajax({
-            type:'GET',
-            url:`/api/sub-account-data/${select.value}`,
-            success:(response) => {
-                if (selectParam!==0 && oldValSub !== '') {
-                    $('#subaccount')
-                        .find('option')
-                        .remove()
-                        .end()
-                        .append('<option value="" disabled>Pilih Sub Rekening</option>');
-                    appendSub(response.data, true)
-                } else {
-                    
-                    if (response.data.length == 0) {
-                        $('#subaccount')
-                        .find('option')
-                            .remove()
-                            .end()
-                            .append('<option value="" disabled selected>Mohon isi sub rekening terlebih dahulu.</option>');
-                    } else {
-                        $('#subaccount')
-                            .find('option')
-                            .remove()
-                            .end()
-                            .append('<option value="" disabled selected>Pilih Sub Rekening</option>');
-                    }
-                    appendSub(response.data, false)
-                }
-            },
-            error:(e) =>{
-                console.log(e);
-                Swal.fire(
-                        'gagal!',
-                        'Ada yang error!',
-                        'error'
-                    )
-            }
-        })
-    }
 </script>
 
-@if ($errors->any())
-@error('account_category_id')
-<script>
-    // console.log('oldValSUb => ' + oldValSub);
-    helpers = 1
-    if (select.value) {
-        const showChild2 = () =>{
-            $.ajax({
-                type:'GET',
-                url:`/api/sub-account-data/${select.value}`,
-                success:(response) => {   
-                    if (response.data.length == 0) {
-                        $('#subaccount')
-                            .find('option')
-                            .remove()
-                            .end()
-                            .append('<option value="" disabled selected>Mohon isi sub rekening terlebih dahulu.</option>');
-                    } else {
-                        if (oldValSub!=='') {
-                            $('#subaccount')
-                                .find('option')
-                                .remove()
-                                .end()
-                                .append('<option value="" disabled>Pilih Sub Rekening</option>');
-                        } else {
-                            $('#subaccount')
-                                .find('option')
-                                .remove()
-                                .end()
-                                .append('<option value="" disabled selected>Pilih Sub Rekening</option>');
-                        }
-                        appendSub(response.data, true)
-                    }
-                },
-            })
-        }
-
-        showChild2()
-    }
-    
-</script>
-@enderror
-<script>
-    // console.log('helpers => ' + helpers);
-    if (helpers==0) {
-        selectAccount(1)
-    }
-</script>
-@endif
-
-
-{{-- custom input --}}
-<script>
-    // flatpickr("#date", {
-    //     dateFormat: "d/m/Y",
-    // });
-    // var cleave = new Cleave('#balance', {
-    //     prefix: 'Rp ',
-    //     numeral: true,
-    //     numeralThousandsGroupStyle: 'thousand'
-    // });
-</script>
-{{-- end custom input --}}
 @endsection

@@ -17,9 +17,9 @@
     <div class="container-fluid p-t-15">
         <div class="box">
             <header>
-                <h3>Indeks Keuangan</h3>
+                <h3>Indeks Keuangan {{ $title }}</h3>
                 <div class="box-tools">
-                    <a href="/finance/create" class="btn btn-flat btn-primary  u-posRelative"
+                    <a href="/finance/create/{{ Str::slug($title) }}" class="btn btn-flat btn-primary  u-posRelative"
                         style="color: white">Tambahkan Catatan Keuangan</a>
                 </div>
             </header>
@@ -41,7 +41,7 @@
                         @foreach ($data as $item)
                         <tr>
                             <td>{{ date_format(date_create_from_format("Y-m-d", $item->date), 'd/m/Y') }}</td>
-                            <td>{{ $item->account->code }}</td>
+                            <td>{{ $item->account->code }} ({{ $item->account->title }})</td>
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->debit }}</td>
                             <td>{{ $item->credit }}</td>
@@ -125,7 +125,7 @@
                 //     ajax: "/api/finance-data"
                 // });
                 // table.ajax.reload();
-            }) 
+            })
         }
     })
 }
