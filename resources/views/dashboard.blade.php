@@ -13,109 +13,6 @@
 
 <div class="main-content bg-clouds">
     <div class="container-fluid p-t-15">
-
-        <div class="row inview">
-            <!-- BEGIN: Kredit -->
-            <div class="col-sm-6">
-                <div class="box">
-                    <header class="b-b">
-                        <h4>Kredit Bulan Kemarin</h4>
-                        <!-- begin box-tools -->
-                        <div class="box-tools">
-                            <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
-                        </div>
-                        <!-- END: box-tools -->
-                    </header>
-                    <div class="box-body ">
-                        <canvas id="creditData" width="200" height="100"></canvas>
-                    </div>
-                </div>
-            </div>
-            <!-- END: Kredit -->
-
-            <!-- BEGIN: Debet -->
-            <div class="col-sm-6">
-                <div class="box">
-                    <header class="b-b">
-                        <h4>Debet Bulan Kemarin</h4>
-                        <!-- begin box-tools -->
-                        <div class="box-tools">
-                            <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
-                        </div>
-                        <!-- END: box-tools -->
-                    </header>
-                    <div class="box-body ">
-                        <canvas id="debitData" width="200" height="100"></canvas>
-                    </div>
-                </div>
-            </div>
-            <!-- END: Debet -->
-        </div>
-
-        <div class="row inview">
-            <!-- BEGIN: Kredit -->
-            <div class="col-md-4">
-                <div class="box">
-                    <header class="b-b">
-                        <h4>Saldo Bulan Kemarin</h4>
-                        <!-- begin box-tools -->
-                        <div class="box-tools">
-                            <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
-                        </div>
-                        <!-- END: box-tools -->
-                    </header>
-                    <div class="box-body ">
-                        <canvas id="balanceData" width="100" height="80"></canvas>
-                    </div>
-                </div>
-            </div>
-            <!-- END: Kredit -->
-
-            <!-- BEGIN: Debet -->
-            <div class="col-md-8">
-                <div class="box">
-                    <header class="b-b">
-                        <h4>Saldo Bulan Kemarin</h4>
-                        <div class="box-tools">
-                            <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
-                        </div>
-                    </header>
-                    <div class="box-body">
-                        <table id="financeTable" class="table table-striped table-bordered dataTable " width="100%"
-                            cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Tgl Pembukuan</th>
-                                    <th>Kode Buku</th>
-                                    <th>Keterangan</th>
-                                    <th>Debit</th>
-                                    <th>Kredit</th>
-                                    <th>Saldo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{-- <tr>
-                                    <td>Data Kosong</td>
-                                </tr> --}}
-                                @foreach ($finance as $item)
-                                <tr>
-                                    <td>{{ date_format(date_create_from_format("Y-m-d", $item->date), 'd/m/Y') }}</td>
-                                    <td>{{ $item->account->code }}</td>
-                                    <td>{{ $item->description }}</td>
-                                    <td>{{ $item->debit }}</td>
-                                    <td>{{ $item->credit }}</td>
-                                    <td>{{ $item->balance }}</td>
-                                </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- END: Debet -->
-        </div>
-
         <div class="box">
             <header>
                 <h3>Catatan Kegiatan</h3>
@@ -202,7 +99,7 @@
                     '</table>';
         }
         // `d` is the original data object for the row
-       
+
     }
 
     // #### start create datatable ####
@@ -229,12 +126,12 @@
             ],
             "order": [[1, 'asc']]
         });
-        
+
         // Add event listener for opening and closing details
         $('#eventsTable tbody').on('click', 'td.dt-control', function () {
             var tr = $(this).closest('tr');
             var row = table.row( tr );
-    
+
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
                     row.child.hide();
@@ -304,7 +201,7 @@
                 }
             });
         }
-        
+
         getDebitData().then(response => {
             let bgcolor = [];
             let brcolor = [];
@@ -350,7 +247,7 @@
                         },
                     }
                 }
-            });  
+            });
         })
     })
 
@@ -379,7 +276,7 @@
                 }
             });
         }
-        
+
         getDebitData().then(response => {
             let bgcolor = [];
             let brcolor = [];
@@ -425,7 +322,7 @@
                         },
                     }
                 }
-            });  
+            });
         })
     })
 
@@ -452,14 +349,14 @@
                 }
             });
         }
-        
+
         getDebitData().then(response => {
             let bgcolor = [];
             let brcolor = [];
             // console.log(balanceData.balance.length);
 
             for (let index = 0; index < balanceData.balance.length; index++) {
-                
+
                 let rand = Math.floor(Math.random() * bgColor.length);
                 bgcolor = [...bgcolor, bgColor[rand]];
                 brcolor = [...brcolor, brColor[rand]];
@@ -500,7 +397,7 @@
                         },
                     }
                 }
-            });  
+            });
         })
     })
 
