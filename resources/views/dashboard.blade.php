@@ -15,28 +15,6 @@
     <div class="container-fluid p-t-15">
         <div class="box">
             <header>
-                <h3>Catatan Kegiatan</h3>
-                <div class="box-tools">
-                    <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
-                </div>
-            </header>
-            <div class="box-body">
-                <table id="eventsTable" class="table table-striped table-bordered dataTable " width="100%"
-                    cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Expand</th>
-                            <th>Judul Kegiatan</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-
-    </div>
-    <div class="container-fluid p-t-15">
-        <div class="box">
-            <header>
                 <h3>Catatan Keuangan</h3>
                 <div class="box-tools">
                     <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
@@ -59,7 +37,7 @@
                         @foreach ($finance as $item)
                             <tr>
                                 <td>{{ date('d/m/Y', strtotime($item->date)) }}</td>
-                                <td>{{ $item->account->code }}</td>
+                                <td class="{{ Str::length($item->account->code) > 4 ? 'text-right' : 'text-left' }}">{{ $item->account->code }}</td>
                                 <td>{{ $item->description }}</td>
                                 <td>{{ $item->debit }}</td>
                                 <td>{{ $item->credit }}</td>
@@ -68,6 +46,42 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="container-fluid p-t-15">
+        <div class="box">
+            <header>
+                <h3>Catatan Kegiatan</h3>
+                <div class="box-tools">
+                    <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
+                </div>
+            </header>
+            <div class="box-body">
+                <table id="eventsTables" class="table table-striped table-bordered dataTable " width="100%"
+                cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Pemberi</th>
+                        <th>Nominal</th>
+                        <th>Kegiatan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($incomes as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ date('d/m/Y',strtotime($item->date)) }}</td>
+                            <td>{{ $item->user->name }}</td>
+                            <td>Rp. {{ number_format($item->balance,2,',','.') }}</td>
+                            <td>{{ $item->event->description }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
             </div>
         </div>
 
@@ -143,6 +157,7 @@
     // #### start create datatable ####
     $(document).ready(function() {
         $('#eventsTable1').DataTable()
+        $('#eventsTables').DataTable()
         var table = $('#eventsTable').DataTable( {
             "ajax": {
                 url:'/api/events-data',

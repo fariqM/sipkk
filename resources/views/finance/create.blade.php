@@ -79,9 +79,10 @@
 
                         <div class="form-group col-md-7 ">
                             <label for="descForm">Keterangan</label>
-                            <input style="width:300px" type="text" class="form-control @error('description') input-error @enderror"
+                            {{-- <input style="width:300px" type="text" class="form-control @error('description') input-error @enderror"
                                 id="descForm" name="description" placeholder="Masukkan Keterangan Keuangan..."
-                                value="{{ old('description') }}">
+                                value="{{ old('description') }}"> --}}
+                                <textarea style="width:300px" name="description" cols="30" rows="5" class="form-control"></textarea>
                             @error('description')
                             <label class="label-error" for="descForm">{{ $message }}</label>
                             @enderror

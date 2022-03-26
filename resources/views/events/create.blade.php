@@ -69,22 +69,16 @@
 
                         <div class="form-group col-md-7 ">
                             <label for="user_id">Pemberi</label>
-                            <div @role('Super Admin') style="display: inline-table" @endrole>
-                                <select style="width:230px" class="form-control @error('user_id') input-error @enderror" id="user_id"
-                                    name="user_id">
-                                    <option value="" disabled selected>Pilih Nama Pemberi</option>
-                                    @foreach ($users as $item)
-                                    @if (old('user_id') == $item->id)
-                                    <option value="{{  $item->id }}" selected>{{ $item->name }}</option>
-                                    @endif
-                                    <option value="{{  $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                @role('Super Admin')
-                                <span class="input-group-addon" id="clear_addon" style="cursor: pointer; left: -342px; position: relative;">Tambahkan
-                                    Anggota</span>
-                                @endrole
-                            </div>
+                            <select style="width:387px" class="form-control @error('user_id') input-error @enderror" id="user_id"
+                                name="user_id">
+                                <option value="" disabled selected>Pilih Nama Pemberi</option>
+                                @foreach ($users as $item)
+                                @if (old('user_id') == $item->id)
+                                <option value="{{  $item->id }}" selected>{{ $item->name }}</option>
+                                @endif
+                                <option value="{{  $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
                             @error('user_id')
                             <label class="label-error" for="user_id">{{ $message }}</label>
                             @enderror
