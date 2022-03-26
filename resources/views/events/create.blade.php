@@ -33,7 +33,7 @@
                                 <span class="input-group-addon" id="cd1">
                                     <i class="fa fa-fw fa-calendar-plus-o"></i>
                                 </span>
-                                <input class="form-control @error('date') input-error @enderror" id="date" name="date"
+                                <input style="width:350px" class="form-control @error('date') input-error @enderror" id="date" name="date"
                                     placeholder="Masukkan Tanggal Pemberian." value="{{ old('date') }}">
                             </div>
                             {{-- <label class="label-error" for="user_id">tes</label> --}}
@@ -44,9 +44,9 @@
                         </div>
 
                         <div class="form-group col-md-7 ">
-                            <label for="event_id">Judul Kegiatan</label>
+                            <label for="event_id">Nama Kegiatan</label>
                             <div @role('Super Admin') style="display: inline-table" @endrole>
-                                <select class="form-control @error('event_id') input-error @enderror" id="event_id"
+                                <select style="width:230px" class="form-control @error('event_id') input-error @enderror" id="event_id"
                                     name="event_id">
                                     <option value="" disabled selected>Pilih Kegiatan</option>
                                     @foreach ($events as $item)
@@ -57,7 +57,7 @@
                                     @endforeach
                                 </select>
                                 @role('Super Admin')
-                                <span class="input-group-addon" id="clear_addon" style="cursor: pointer"
+                                <span class="input-group-addon" id="clear_addon" style="cursor: pointer; left: -339px; position: relative;"
                                     onclick="addEvent()">Tambahkan
                                     Kegiatan</span>
                                 @endrole
@@ -70,7 +70,7 @@
                         <div class="form-group col-md-7 ">
                             <label for="user_id">Pemberi</label>
                             <div @role('Super Admin') style="display: inline-table" @endrole>
-                                <select class="form-control @error('user_id') input-error @enderror" id="user_id"
+                                <select style="width:230px" class="form-control @error('user_id') input-error @enderror" id="user_id"
                                     name="user_id">
                                     <option value="" disabled selected>Pilih Nama Pemberi</option>
                                     @foreach ($users as $item)
@@ -81,7 +81,7 @@
                                     @endforeach
                                 </select>
                                 @role('Super Admin')
-                                <span class="input-group-addon" id="clear_addon" style="cursor: pointer">Tambahkan
+                                <span class="input-group-addon" id="clear_addon" style="cursor: pointer; left: -342px; position: relative;">Tambahkan
                                     Anggota</span>
                                 @endrole
                             </div>
@@ -96,7 +96,7 @@
                                 <span class="input-group-addon" id="cpr1">
                                     Rp
                                 </span>
-                                <input class="form-control text-right @error('balance') input-error @enderror"
+                                <input style="width:350px" class="form-control text-right @error('balance') input-error @enderror"
                                     id="balance" name="balance" placeholder="Masukkan Nominal Pemberian."
                                     value="{{ old('balance') }}">
                                 {{-- <input id="balance" type="text" class="text-right cleave-cpr1 form-control"

@@ -43,6 +43,11 @@
                             <input type="text" class="form-control" id="atext" name="account"
                                 placeholder="Masukkan Nama Rekening...">
                         </div>
+                        {{-- <div class="form-group col-md-7 ">
+                            <label for="atext">Kode</label>
+                            <input type="text" class="form-control" id="atext" name="code"
+                                placeholder="Masukkan kode Rekening...">
+                        </div> --}}
                         <div class="form-group col-md-12">
                             <button type="submit" class="btn btn-flat btn-primary  u-posRelative">Simpan</button>
                         </div>

@@ -22,24 +22,24 @@
                     <form action="/user/store" method="POST">
                         @csrf
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-7">
                             <label for="name">Nama</label>
                             <input type="text" class="form-control @error('name') input-error @enderror" id="name"
-                                name="name" value="{{ old('name') }}" placeholder="Masukkan nama pengguna baru">
+                                name="name" style="width:300px" value="{{ old('name') }}" placeholder="Masukkan nama pengguna baru">
                             @error('name')
                             <label class="label-error" for="name">{{ $message }}</label>
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-7">
                             <label for="password">Password</label>
                             <div class="input-group">
                                 <input type="password" class="form-control @error('password') input-error @enderror"
-                                    id="password" name="password" value="{{ old('password') }}"
+                                    id="password" name="password" style="width:300px" value="{{ old('password') }}"
                                     placeholder="Masukkan password pengguna baru">
-                                <span class="input-group-addon" id="cp1" onclick="showPassword()" style="cursor: pointer;">
+                                {{-- <span class="input-group-addon" id="cp1" onclick="showPassword()" style="cursor: pointer;">
                                     <i class="fa fa-fw fa-eye-slash" id="passwordIcon"></i>
-                                </span>
+                                </span> --}}
                             </div>
 
                             @error('password')
@@ -47,15 +47,15 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-7">
                             <label for="password_confirmation">Konfirmasi Password</label>
                             <div class="input-group">
                                 <input type="password" class="form-control @error('password_confirmation') input-error @enderror"
-                                    id="password_confirmation" name="password_confirmation" value="{{ old('password_confirmation') }}"
+                                    id="password_confirmation" name="password_confirmation" style="width:300px" value="{{ old('password_confirmation') }}"
                                     placeholder="Masukkan password pengguna baru">
-                                <span class="input-group-addon" id="cp1" onclick="showPasswordConf()" style="cursor: pointer;">
+                                {{-- <span class="input-group-addon" id="cp1" onclick="showPasswordConf()" style="cursor: pointer;">
                                     <i class="fa fa-fw fa-eye-slash" id="passwordIcon2"></i>
-                                </span>
+                                </span> --}}
                             </div>
 
                             @error('password_confirmation')
@@ -63,19 +63,19 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-7">
                             <label for="email">Email</label>
                             <input type="email" class="form-control @error('email') input-error @enderror" id="email"
-                                name="email" value="{{ old('email') }}" placeholder="Masukkan email pengguna baru">
+                                name="email" style="width:300px" value="{{ old('email') }}" placeholder="Masukkan email pengguna baru">
                             @error('email')
                             <label class="label-error" for="email">{{ $message }}</label>
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-7">
                             <label for="role">Jabatan</label>
                             <div>
-                                <select class="form-control @error('role') input-error @enderror" id="role" name="role">
+                                <select class="form-control @error('role') input-error @enderror" id="role" name="role" style="width: 300px">
                                     <option value="" disabled selected>Pilih Jabatan</option>
                                     @foreach ($roles as $item)
                                     @if (old('role') == $item->name)

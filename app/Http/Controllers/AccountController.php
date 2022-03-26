@@ -12,7 +12,8 @@ class AccountController extends Controller
     public function index()
     {
         $path = 'rekening';
-        return view('account.index', compact('path'));
+        $accounts = Account::get();
+        return view('account.index', compact('path', 'accounts'));
     }
 
     public function create()
@@ -35,7 +36,7 @@ class AccountController extends Controller
                     if (!$dataExits) {
                         $idx = $key + 1;
                         break;
-                    } 
+                    }
                 }
             }
             if ($idx == null) {

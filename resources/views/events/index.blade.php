@@ -24,15 +24,33 @@
                 </div>
             </header>
             <div class="box-body">
-                <table id="eventsTable" class="table table-striped table-bordered dataTable " width="100%"
+                <table id="eventsTables" class="table table-striped table-bordered dataTable " width="100%"
                     cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Expand</th>
-                            <th>Judul Kegiatan</th>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Pemberi</th>
+                            <th>Nominal</th>
+                            <th>Kegiatan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach ($incomes as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ date('d/m/Y',strtotime($item->date)) }}</td>
+                                <td>{{ $item->user->name }}</td>
+                                <td>Rp. {{ number_format($item->balance,2,',','.') }}</td>
+                                <td>{{ $item->event->description }}</td>
+                                <td>
+                                    <button id='update' onclick="deleteAlert({{ $item }})" class='btn btn-danger' style='margin-right:1rem'>Hapus</button>
+                                    <a href="{{ route('event.show',$item) }}" class='btn btn-primary'>Ubah</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -53,6 +71,7 @@
 
 {{-- show modal/alert script --}}
 <script>
+    $('#eventsTables').DataTable();
     const deleteAlert = (data) => {
         // console.log(data);
         Swal.fire({
@@ -69,7 +88,7 @@
                 deleteParent(data.id).then(response => {
                     let table = $('#eventsTable').DataTable();
                     table.ajax.reload();
-                }) 
+                })
             }
         })
     }
@@ -115,7 +134,7 @@
                 deleteChild(id).then(response => {
                     let table = $('#eventsTable').DataTable();
                     table.ajax.reload();
-                }) 
+                })
             }
         })
     }
@@ -156,12 +175,13 @@
     }
 
     const deleteParent = async (id) => {
-        await 
+        await
         $.ajax({
            type:'DELETE',
            url:`/api/delete-event/${id}`,
            success:(response) => {
                 alertSuccess('Kegiatan berhasil dihapus')
+                location.reload()
             },
            error:(e) =>{
                 console.log(e);
@@ -171,12 +191,13 @@
     }
 
     const deleteChild = async (id) => {
-        await 
+        await
         $.ajax({
            type:'DELETE',
            url:`/api/delete-child-event/${id}`,
            success:(response) => {
                 alertSuccess('Kegiatan berhasil dihapus')
+                location.reload()
             },
            error:(e) =>{
                 console.log(e);
@@ -252,7 +273,7 @@
                     '</table>';
         }
         // `d` is the original data object for the row
-       
+
     }
 
     // #### start create datatable ####
@@ -295,12 +316,12 @@
             var data = table.row( $(this).parents('tr') ).data();
             deleteAlert(data)
         });
-        
+
         // Add event listener for opening and closing details
         $('#eventsTable tbody').on('click', 'td.dt-control', function () {
             var tr = $(this).closest('tr');
             var row = table.row( tr );
-    
+
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
                     row.child.hide();

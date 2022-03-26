@@ -15,7 +15,8 @@ class EventController extends Controller
     public function index()
     {
         $path = 'kegiatan';
-        return view('events.index', compact('path'));
+        $incomes = Income::get();
+        return view('events.index', compact('path', 'incomes'));
     }
 
     public function indexAPI()

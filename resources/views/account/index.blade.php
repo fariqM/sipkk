@@ -21,15 +21,38 @@
                 </div>
             </header>
             <div class="box-body">
-                <table id="accountTable" class="table table-striped table-bordered dataTable " width="100%"
+                <table id="accountTables" class="table table-striped table-bordered dataTable " width="100%"
                     cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Expand</th>
-                            <th>Kategori Rekening</th>
-                            <th>Aksi</th>
+                            <th colspan="3" class="text-center">List Rekening</th>
+                            <th colspan="2">Aksi</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach ($accounts as $account)
+                        <tr>
+                            <td class="text-right" style="font-weight: bold; width:20px">{{ $account->idx }}</td>
+                            <th style="width: 70px"></th>
+                            <td style="font-weight: bold; width:600px">{{ $account->title }}</td>
+                            <td colspan="2">
+                                <button id='delete' class='btn btn-danger' onclick="deleteParent({{ $account->id }})" style='margin-right:1rem'>Hapus</button>
+                                <a href="{{ route('account.update',$account) }}" class='btn btn-primary' >Ubah</a>
+                            </td>
+                        </tr>
+                            @foreach ($account->categories as $item)
+                                <tr>
+                                    <th></th>
+                                    <td class="text-right" style="font-weight: bold">{{ $item->code }}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td colspan="2">
+                                        <button id='delete' class='btn btn-danger' onclick="deleteChild({{ $item->id }})" style='margin-right:1rem'>Hapus</button>
+                                        <a href="{{ url('account/child-update/'.$item->id ) }}" class='btn btn-primary'>Ubah</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -64,13 +87,13 @@
                     deleteChild(id).then(response => {
                         var table = $('#accountTable').DataTable();
                         table.ajax.reload();
-                    }) 
+                    })
                 }
             })
     }
 
     const deleteChild = async (id) => {
-        await 
+        await
         $.ajax({
            type:'DELETE',
            url:"/api/delete-child-account",
@@ -81,7 +104,9 @@
                     'Berhasil terhapus.',
                     'success'
                 )
-                return response
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
             },
            error:(e) =>{
                console.log(e);
@@ -96,7 +121,7 @@
     }
 
     const deleteParent = async (id) => {
-        await 
+        await
         $.ajax({
            type:'DELETE',
            url:"/api/delete-account",
@@ -107,7 +132,9 @@
                     'Berhasil terhapus.',
                     'success'
                 )
-                return response
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
             },
            error:(e) =>{
                console.log(e);
@@ -147,6 +174,7 @@
     }
 
     $(document).ready(function() {
+        $('#accountTables').DataTable()
         var table = $('#accountTable').DataTable( {
             "ajax": {
                 url:'/api/account-data',
@@ -196,16 +224,16 @@
                 if (result.isConfirmed) {
                     deleteParent(data.id).then(response => {
                         table.ajax.reload();
-                    }) 
+                    })
                 }
             })
         });
-        
+
         // Add event listener for opening and closing details
         $('#accountTable tbody').on('click', 'td.dt-control', function () {
             var tr = $(this).closest('tr');
             var row = table.row( tr );
-    
+
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
                     row.child.hide();

@@ -29,7 +29,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
                 Route::get('index', 'AccountController@index')->name('account');
                 Route::get('create', 'AccountController@create');
                 Route::post('setup', 'AccountCategoryController@store');
-                Route::get('parent-update/{account:id}', 'AccountController@parentShow');
+                Route::get('parent-update/{account}', 'AccountController@parentShow')->name('account.update');
                 Route::post('parent-update/{account:id}/update', 'AccountController@parentUpdate')->name('parent.update');
                 Route::get('child-update/{id}', 'AccountController@childShow');
                 Route::post('child-update/{accountcategory:id}/update', 'AccountController@childUpdate')->name('child.update');
@@ -48,7 +48,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
                 Route::get('index', 'EventController@index')->name('events');
                 Route::get('create', 'EventController@create');
                 Route::post('store', 'EventController@store');
-                Route::get('update/{income:id}', 'EventController@show')->name('event.show');
+                Route::get('update/{income}', 'EventController@show')->name('event.show');
                 Route::post('update/{income:id}/store', 'EventController@childUpdate')->name('event.update');
             });
 
