@@ -90,7 +90,7 @@
 
                         <div class="form-group col-md-12 ">
                             <label for="debitForm">Debet</label>
-                            <input type="number" step="0.01" min="0"
+                            <input type="number" min="0"
                                 class="form-control @error('debit') input-error @enderror" id="debitForm" name="debit"
                                 placeholder="Masukkan Debet (jik ada)." value="{{ old('debit') }}">
                             @error('debit')
@@ -100,7 +100,7 @@
 
                         <div class="form-group col-md-12 ">
                             <label for="creditForm">Kredit</label>
-                            <input type="number" step="0.01" min="0"
+                            <input type="number" min="0"
                                 class="form-control @error('credit') input-error @enderror" id="creditForm"
                                 name="credit" placeholder="Masukkan Kredit (jik ada)." value="{{ old('credit') }}">
                             @error('credit')
@@ -110,7 +110,7 @@
 
                         {{-- <div class="form-group col-md-12 ">
                             <label for="balanceForm">Saldo</label>
-                            <input type="number" step="0.01" min="0"
+                            <input type="number" min="0"
                                 class="form-control @error('balance') input-error @enderror" id="balanceForm"
                                 name="balance" placeholder="Masukkan Saldo (jik ada)." value="{{ old('balance') }}">
                             @error('balance')
@@ -143,6 +143,27 @@
 
 {{-- modal/dialog script --}}
 <script>
+    flatpickr("#date", {
+        dateFormat: "d/m/Y",
+    });
+    $('#debitForm').keyup(function (e) {
+        var val = $(this).val();
+        var length = val.length;
+        if (length > 0) {
+            $('#creditForm').attr('disabled', true);
+        }else{
+            $('#creditForm').attr('disabled', false);
+        }
+    });
+    $('#creditForm').keyup(function (e) {
+        var val = $(this).val();
+        var length = val.length;
+        if (length > 0) {
+            $('#debitForm').attr('disabled', true);
+        }else{
+            $('#debitForm').attr('disabled', false);
+        }
+    });
     const addAccount = () => {
         Swal.fire({
             title: 'Tambahkan Jenis Rekening',

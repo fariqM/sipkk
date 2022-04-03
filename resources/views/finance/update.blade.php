@@ -122,10 +122,25 @@
     flatpickr("#date", {
         dateFormat: "d/m/Y",
     });
-    var cleave = new Cleave('#balance', {
-        prefix: 'Rp ',
-        numeral: true,
-        numeralThousandsGroupStyle: 'thousand'
+    $('#debitForm').keyup(function (e) {
+        var val = $(this).val();
+        console.log('12');
+        var length = val.length;
+        if (length > 0) {
+            $('#creditForm').attr('disabled', true);
+        }else{
+            $('#creditForm').attr('disabled', false);
+        }
+    });
+    $('#creditForm').keyup(function (e) {
+        var val = $(this).val();
+        console.log('21');
+        var length = val.length;
+        if (length > 0) {
+            $('#debitForm').attr('disabled', true);
+        }else{
+            $('#debitForm').attr('disabled', false);
+        }
     });
 </script>
 {{-- end custom input --}}
