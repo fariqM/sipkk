@@ -24,10 +24,9 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="{{ route('event.update', ['income' => $income->id]) }}" method="POST">
+                    <form action="{{ route('event.update', $income) }}" method="POST" style="margin: 0 auto; width:40%">
                         @csrf
-
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="date">Tanggal</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="cd1">
@@ -45,7 +44,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="event_id">Judul Kegiatan</label>
                             <div @role('Super Admin') style="display: inline-table" @endrole>
                                 <select class="form-control @error('event_id') input-error @enderror" id="event_id"
@@ -70,14 +69,14 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="user_id">Pemberi</label>
                             <div @role('Super Admin') style="display: inline-table" @endrole>
                                 <select class="form-control @error('user_id') input-error @enderror" id="user_id"
                                     name="user_id">
                                     <option value="" disabled selected>Pilih Nama Pemberi</option>
                                     @foreach ($users as $item)
-                                    @if (old('user_id') == $item->id || $income->user_id == $item->id)
+                                    @if (old('user_id') == $item->id || $income->member_id == $item->id)
                                     <option value="{{  $item->id }}" selected>{{ $item->name }}</option>
                                     @else
                                     <option value="{{  $item->id }}">{{ $item->name }}</option>
@@ -94,13 +93,13 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="balance">Nominal</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="cpr1">
                                     Rp
                                 </span>
-                                <input class="form-control text-right @error('balance') input-error @enderror"
+                                <input class="form-control @error('balance') input-error @enderror"
                                     id="balance" name="balance" placeholder="Masukkan Nominal Pemberian."
                                     value="{{ old('balance') ?  old('balance') : $income->balance }}">
                                 {{-- <input id="balance" type="text" class="text-right cleave-cpr1 form-control"
@@ -135,7 +134,6 @@
         dateFormat: "d/m/Y",
     });
     var cleave = new Cleave('#balance', {
-        prefix: 'Rp ',
         numeral: true,
         numeralThousandsGroupStyle: 'thousand'
     });

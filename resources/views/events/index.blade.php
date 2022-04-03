@@ -154,6 +154,13 @@
             'error'
         )
     }
+
+    @if (session('success'))
+        Swal.fire({
+            text: "{{ session('success') }}",
+            icon: 'success',
+        })
+    @endif
 </script>
 {{-- end show modal/alert script --}}
 

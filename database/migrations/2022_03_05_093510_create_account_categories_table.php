@@ -21,6 +21,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->string('code')->nullable();
             $table->string('title')->nullable();
+            $table->bigInteger('balance')->default(0);
             $table->timestamps();
         });
     }

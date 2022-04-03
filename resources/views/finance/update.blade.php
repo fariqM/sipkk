@@ -23,10 +23,10 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="{{ route('finance.update', ['finance' => $finance->id]) }}" method="POST">
+                    <form action="{{ route('finance.update', ['finance' => $finance->id]) }}" method="POST" style="margin: 0 auto; width:40%">
                         @csrf
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="date">Tanggal</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="cd1">
@@ -43,7 +43,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="atext">Katergori Buku Rekening</label>
                             <div style="display: inline-table">
                                 <select class="form-control @error('account_category_id') input-error @enderror"
@@ -68,7 +68,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="descForm">Keterangan</label>
                             <input type="text" class="form-control  @error('description') input-error @enderror"
                                 id="descForm" name="description" placeholder="Masukkan Keterangan Keuangan..."
@@ -78,7 +78,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="debitForm">Debet</label>
                             <input type="number" step="0.01" min="0"
                                 class="form-control  @error('debit') input-error @enderror" id="debitForm" name="debit"
@@ -89,7 +89,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="creditForm">Kredit</label>
                             <input type="number" step="0.01" min="0"
                                 class="form-control  @error('credit') input-error @enderror" id="creditForm"
@@ -97,17 +97,6 @@
                                 value="{{ old('credit') ? old('credit') : $finance->credit }}">
                             @error('credit')
                             <label class="label-error" for="creditForm">{{ $message }}</label>
-                            @enderror
-                        </div>
-
-                        <div class="form-group col-md-7 ">
-                            <label for="balanceForm">Saldo</label>
-                            <input type="number" step="0.01" min="0"
-                                class="form-control  @error('balance') input-error @enderror" id="balanceForm"
-                                name="balance" placeholder="Masukkan Saldo Keuangan (jik ada)."
-                                value="{{ old('balance') ? old('balance') : $finance->balance }}">
-                            @error('balance')
-                            <label class="label-error" for="balanceForm">{{ $message }}</label>
                             @enderror
                         </div>
 

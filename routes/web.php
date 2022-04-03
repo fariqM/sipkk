@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('App\Http\Controllers')->group(function(){
     Route::middleware('auth')->group(function(){
+        Route::resource('member', 'MemberController');
         Route::group(['middleware' => ['role:Super Admin']], function () {
             Route::prefix('user')->group(function(){
                 Route::get('users-data', 'UserController@IndexAPI');
@@ -49,7 +50,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
                 Route::get('create', 'EventController@create');
                 Route::post('store', 'EventController@store');
                 Route::get('update/{income}', 'EventController@show')->name('event.show');
-                Route::post('update/{income:id}/store', 'EventController@childUpdate')->name('event.update');
+                Route::post('update/{income}/store', 'EventController@childUpdate')->name('event.update');
             });
 
         });

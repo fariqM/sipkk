@@ -12,7 +12,7 @@ class Income extends Model
     protected $fillable= [
         'event_id',
         'date',
-        'user_id',
+        'member_id',
         'balance',
     ];
 
@@ -21,6 +21,6 @@ class Income extends Model
     }
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Member::class,'member_id');
     }
 }

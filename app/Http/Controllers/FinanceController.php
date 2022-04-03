@@ -26,6 +26,7 @@ class FinanceController extends Controller
         $data = Finance::join('account_categories','account_categories.id','=','finances.account_category_id')
                 ->join('accounts','accounts.id','=','account_categories.account_id')
                 ->where('account_categories.account_id',$id)
+                ->select('finances.*')
                 ->get();
         $path = 'keuangan';
         return view('finance.index', compact('path', 'data','title'));
@@ -48,13 +49,19 @@ class FinanceController extends Controller
 
     public function store(FinanceRequest $request)
     {
-        $array_store = array_merge($request->all(), [
-            'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
-        ]);
+        $data = $request->all();
+        $account_category = AccountCategory::where('id',$data['account_category_id'])->first();
+        $balance = $account_category->balance;
+        $data['date'] = date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d');
         //    $store_array = array_merge($request->all(), ['balance' =>  $request->debit-$request->credit]);
         $account = Account::find($request->account_id);
-
-        Finance::create($array_store);
+        if($data['debit'] != null){
+            $data['balance'] = $balance + $data['debit'];
+        }else{
+            $data['balance'] = $balance - $data['credit'];
+        }
+        AccountCategory::find($account_category->id)->update(['balance' => $data['balance']]);
+        Finance::create($data);
         return redirect('/finance/index/'.Str::slug($account->title))->with('success', 'Data berhasil ditambahkan');
     }
 

@@ -24,16 +24,16 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="/finance/store" method="POST">
+                    <form action="/finance/store" method="POST" style="margin: 0 auto; width:40%">
                         @csrf
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="date">Tanggal</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="cd1">
                                     <i class="fa fa-fw fa-calendar-plus-o"></i>
                                 </span>
-                                <input style="width:260px" class="form-control @error('date') input-error @enderror" id="date" name="date"
+                                <input class="form-control @error('date') input-error @enderror" id="date" name="date"
                                     placeholder="Masukkan Tanggal Pembukuan." value="{{ old('date') }}">
                             </div>
                             {{-- <label class="label-error" for="user_id">tes</label> --}}
@@ -44,7 +44,7 @@
                         </div>
 
                         <input type="hidden" name="account_id" value="{{  $account->id }}">
-                        {{-- <div class="form-group col-md-7 ">
+                        {{-- <div class="form-group col-md-12 ">
                             <label for="atext">Jenis Rekening</label>
                             <div @hasrole('Super Admin') style="display: inline-table" @endhasrole>
                                 <select class="form-control @error('account_id') input-error @enderror"
@@ -63,9 +63,9 @@
                             @enderror
                         </div> --}}
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="atext">Sub Rekening</label>
-                            <select style="width:300px" class="form-control @error('account_category_id') input-error @enderror"
+                            <select class="form-control @error('account_category_id') input-error @enderror"
                                 id="subaccount" name="account_category_id">
                                 <option value="" disabled selected>Pilih Sub Rekening</option>
                                 @foreach ($data as $item)
@@ -77,20 +77,20 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="descForm">Keterangan</label>
-                            {{-- <input style="width:300px" type="text" class="form-control @error('description') input-error @enderror"
+                            {{-- <input type="text" class="form-control @error('description') input-error @enderror"
                                 id="descForm" name="description" placeholder="Masukkan Keterangan Keuangan..."
                                 value="{{ old('description') }}"> --}}
-                                <textarea style="width:300px" name="description" cols="30" rows="5" class="form-control"></textarea>
+                                <textarea name="description" cols="30" rows="5" class="form-control"></textarea>
                             @error('description')
                             <label class="label-error" for="descForm">{{ $message }}</label>
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="debitForm">Debet</label>
-                            <input style="width:300px" type="number" step="0.01" min="0"
+                            <input type="number" step="0.01" min="0"
                                 class="form-control @error('debit') input-error @enderror" id="debitForm" name="debit"
                                 placeholder="Masukkan Debet (jik ada)." value="{{ old('debit') }}">
                             @error('debit')
@@ -98,9 +98,9 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="creditForm">Kredit</label>
-                            <input style="width:300px" type="number" step="0.01" min="0"
+                            <input type="number" step="0.01" min="0"
                                 class="form-control @error('credit') input-error @enderror" id="creditForm"
                                 name="credit" placeholder="Masukkan Kredit (jik ada)." value="{{ old('credit') }}">
                             @error('credit')
@@ -108,15 +108,15 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        {{-- <div class="form-group col-md-12 ">
                             <label for="balanceForm">Saldo</label>
-                            <input style="width:300px" type="number" step="0.01" min="0"
+                            <input type="number" step="0.01" min="0"
                                 class="form-control @error('balance') input-error @enderror" id="balanceForm"
                                 name="balance" placeholder="Masukkan Saldo (jik ada)." value="{{ old('balance') }}">
                             @error('balance')
                             <label class="label-error" for="balanceForm">{{ $message }}</label>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="form-group col-md-12">
                             <button type="submit" class="btn btn-flat btn-primary  u-posRelative">Simpan</button>

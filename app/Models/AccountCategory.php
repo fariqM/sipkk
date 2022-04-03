@@ -9,7 +9,7 @@ class AccountCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['account_id', 'level', 'code', 'title'];
+    protected $fillable= ['account_id', 'level', 'code', 'title', 'balance'];
 
     public function account(){
         return $this->belongsTo(Account::class);

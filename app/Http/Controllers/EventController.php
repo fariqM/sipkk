@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\Income;
+use App\Models\Member;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,7 @@ class EventController extends Controller
     public function create()
     {
         $path = 'kegiatan';
-        $users = DB::table('users')->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-            ->whereNull('model_has_roles.role_id')->orWhere('model_has_roles.role_id', '!=', '1')
-            ->select('users.id', 'users.name')->get();
+        $users = Member::all();
         $events = Event::orderBy('created_at', 'desc')->get();
         // $user = User::with('roles')->get();
 
@@ -40,8 +39,14 @@ class EventController extends Controller
 
     public function store(EventRequest $request)
     {
-
-        $array_store = array_merge($request->all(), [
+        $data = $request->validate([
+            'user_id' => 'required',
+            'date' => 'required',
+            'event_id' => 'required',
+            'balance' => 'required',
+        ]);
+        $data['member_id'] = $request->user_id;
+        $array_store = array_merge($data, [
             'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
         ]);
         Income::create($array_store);
@@ -63,9 +68,7 @@ class EventController extends Controller
     public function show(Income $income)
     {
         $path = 'kegiatan';
-        $users = DB::table('users')->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-            ->whereNull('model_has_roles.role_id')->orWhere('model_has_roles.role_id', '!=', '1')
-            ->select('users.id', 'users.name')->get();
+        $users = Member::all();
         $events = Event::orderBy('created_at', 'desc')->get();
 
         // dd($income);
@@ -86,11 +89,18 @@ class EventController extends Controller
 
     public function childUpdate(Income $income, EventRequest $request)
     {
-        $array_store = array_merge($request->all(), [
+        $data = $request->validate([
+            'user_id' => 'required',
+            'date' => 'required',
+            'event_id' => 'required',
+            'balance' => 'required',
+        ]);
+        $data['member_id'] = $request->user_id;
+        $array_store = array_merge($data, [
             'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
         ]);
         $income->update($array_store);
-        return redirect('/event/index');
+        return redirect('/event/index')->with('success', 'Data berhasil diubah');
     }
 
     public function destroyParent(Event $event)

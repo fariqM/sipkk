@@ -23,9 +23,9 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="{{ route('child.update', ['accountcategory' => $child->id]) }}" method="POST">
+                    <form action="{{ route('child.update', ['accountcategory' => $child->id]) }}" method="POST" style="margin: 0 auto; width:50%">
                         @csrf
-                        <div class="form-group col-md-6 ">
+                        <div class="form-group col-md-12 ">
                             <label for="atext">Nama Rekening</label>
 
                             <input type="text"

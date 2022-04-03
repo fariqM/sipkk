@@ -24,16 +24,16 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="/event/store" method="POST">
+                    <form action="/event/store" method="POST" style="margin: 0 auto; width:40%">
                         @csrf
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12 ">
                             <label for="date">Tanggal</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="cd1">
                                     <i class="fa fa-fw fa-calendar-plus-o"></i>
                                 </span>
-                                <input style="width:350px" class="form-control @error('date') input-error @enderror" id="date" name="date"
+                                <input class="form-control @error('date') input-error @enderror" id="date" name="date"
                                     placeholder="Masukkan Tanggal Pemberian." value="{{ old('date') }}">
                             </div>
                             {{-- <label class="label-error" for="user_id">tes</label> --}}
@@ -43,10 +43,10 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12">
                             <label for="event_id">Nama Kegiatan</label>
                             <div @role('Super Admin') style="display: inline-table" @endrole>
-                                <select style="width:230px" class="form-control @error('event_id') input-error @enderror" id="event_id"
+                                <select class="form-control @error('event_id') input-error @enderror" id="event_id"
                                     name="event_id">
                                     <option value="" disabled selected>Pilih Kegiatan</option>
                                     @foreach ($events as $item)
@@ -57,7 +57,7 @@
                                     @endforeach
                                 </select>
                                 @role('Super Admin')
-                                <span class="input-group-addon" id="clear_addon" style="cursor: pointer; left: -339px; position: relative;"
+                                <span class="input-group-addon" id="clear_addon" style="cursor: pointer"
                                     onclick="addEvent()">Tambahkan
                                     Kegiatan</span>
                                 @endrole
@@ -67,9 +67,9 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12">
                             <label for="user_id">Pemberi</label>
-                            <select style="width:387px" class="form-control @error('user_id') input-error @enderror" id="user_id"
+                            <select class="form-control @error('user_id') input-error @enderror" id="user_id"
                                 name="user_id">
                                 <option value="" disabled selected>Pilih Nama Pemberi</option>
                                 @foreach ($users as $item)
@@ -84,13 +84,13 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7 ">
+                        <div class="form-group col-md-12">
                             <label for="balance">Nominal</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="cpr1">
                                     Rp
                                 </span>
-                                <input style="width:350px" class="form-control text-right @error('balance') input-error @enderror"
+                                <input class="form-control @error('balance') input-error @enderror"
                                     id="balance" name="balance" placeholder="Masukkan Nominal Pemberian."
                                     value="{{ old('balance') }}">
                                 {{-- <input id="balance" type="text" class="text-right cleave-cpr1 form-control"
@@ -98,11 +98,11 @@
                             </div>
 
                             @error('balance')
-                            <label class="label-error" for="user_id">{{ $message }}</label>
+                            <label class="label-error" for="balance">{{ $message }}</label>
                             @enderror
                         </div>
                         <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-flat btn-primary  u-posRelative">Simpan</button>
+                            <button type="submit" onclick="submit()" class="btn btn-flat btn-primary  u-posRelative">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -125,98 +125,8 @@
         dateFormat: "d/m/Y",
     });
     var cleave = new Cleave('#balance', {
-        prefix: 'Rp ',
         numeral: true,
         numeralThousandsGroupStyle: 'thousand'
     });
 </script>
-{{-- end custom input --}}
-
-
-{{-- sweet alert --}}
-<script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.all.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.min.js') }}"></script>
-{{-- end sweet alert --}}
-
-
-{{-- show modal/alert script --}}
-<script>
-    const addEvent = () => {
-        Swal.fire({
-            title: 'Tambahkan kegiatan ?',
-            text: "Masukkan nama kegiatan.",
-            input: 'text',
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Tambahkan',
-            cancelButtonText:'Batalkan',
-            showLoaderOnConfirm: true,
-            confirmButtonColor: '#C9302C',
-            cancelButtonColor: '#337AB7',
-            preConfirm: (data) => {
-                if (data==="" || data===null) {
-                    Swal.fire(
-                        'gagal!',
-                        'Input Kosong!',
-                        'error'
-                    )
-                } else {
-                    addEventAction(data)
-                }
-            },
-        })
-    }
-
-    const alertSuccess = (message) => {
-        Swal.fire(
-            'Sukses!',
-            message,
-            'success'
-        )
-    }
-
-    const alertError = (message) => {
-        Swal.fire(
-            'gagal!',
-            message,
-            'error'
-        )
-    }
-</script>
-{{-- end show modal/alert script --}}
-
-
-{{-- action script --}}
-<script>
-    event_select = document.getElementById('event_id');
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    const addEventAction = (data) => {
-        $.ajax({
-           type:'POST',
-           url:"/api/add-event",
-           data:{description:data},
-           success:(response) => {
-                // console.log(response);
-                var opt = document.createElement('option');
-                opt.value = response.id;
-                opt.innerHTML = response.description;
-                event_select.appendChild(opt);
-                alertSuccess('Kegiatan telah ditambahkan.')
-            },
-           error:(e) =>{
-            console.log(e);
-                alertError('Gagal menambahkan data.')
-           }
-        });
-    }
-
-</script>
-{{-- end action script --}}
 @endsection

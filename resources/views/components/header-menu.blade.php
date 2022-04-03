@@ -8,7 +8,7 @@
                     <span class="nav-icon">
                         <i class="fa fa-fw fa-bar-chart-o "></i>
                     </span>
-                    <span class="nav-title">Dasbor</span>
+                    <span class="nav-title">Laporan Keuangan</span>
                 </a>
             </li>
 
@@ -34,8 +34,15 @@
                     <span class="nav-tools visible-xs"><i class="fa fa-fw arrow"></i></span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('member.index') }}" class="{{ $path === 'member' ? 'active' : '' }}">
+                    <span class="nav-icon"><i class="fa fa-fw fa-users"></i></span>
+                    <span class="nav-title">Setup Anggota</span>
+                    <span class="nav-tools visible-xs"><i class="fa fa-fw arrow"></i></span>
+                </a>
+            </li>
             @endhasrole
-            
+
             <!-- END: Setup Pengguna -->
 
             <!-- BEGIN: Peristiwa Keuangan -->
