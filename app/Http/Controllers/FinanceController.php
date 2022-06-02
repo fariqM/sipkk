@@ -14,9 +14,9 @@ class FinanceController extends Controller
 
     public function main()
     {
-        $accounts = Account::all();
+        $finance = Finance::all();
         $path = 'keuangan';
-        return view('finance.main', compact('accounts','path'));
+        return view('finance.main', compact('finance','path'));
     }
 
     public function index($slug)
@@ -38,13 +38,11 @@ class FinanceController extends Controller
         return response($data);
     }
 
-    public function create($slug)
+    public function create()
     {
-        $title = ucwords(str_replace('-', ' ', $slug));
-        $account = Account::where('title', $title)->first();
+        $account = Account::all();
         $path = 'keuangan';
-        $data = AccountCategory::where('account_id',$account->id)->get();
-        return view('finance.create', compact('path', 'data', 'account'));
+        return view('finance.create', compact('path', 'account'));
     }
 
     public function store(FinanceRequest $request)
@@ -55,32 +53,49 @@ class FinanceController extends Controller
         $data['date'] = date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d');
         //    $store_array = array_merge($request->all(), ['balance' =>  $request->debit-$request->credit]);
         $account = Account::find($request->account_id);
-        if($data['debit'] != null){
+        if(!empty($data['debit'])){
             $data['balance'] = $balance + $data['debit'];
         }else{
-            $data['balance'] = $balance - $data['credit'];
+            if($balance > $data['credit']){
+                $data['balance'] = $balance - $data['credit'];
+            }else{
+                return redirect()->back()->with('error', 'Saldo tidak mencukupi');
+            }
         }
         AccountCategory::find($account_category->id)->update(['balance' => $data['balance']]);
         Finance::create($data);
-        return redirect('/finance/index/'.Str::slug($account->title))->with('success', 'Data berhasil ditambahkan');
+        return redirect('/finance/main')->with('success', 'Data berhasil ditambahkan');
     }
 
     public function show(Finance $finance)
     {
         $path = 'keuangan';
+        $account = Account::all();
         $data = AccountCategory::get();
 
-        return view('finance.update', compact('path', 'data', 'finance'));
+        return view('finance.update', compact('path', 'account', 'finance'));
     }
 
-    public function update(Finance $finance, FinanceRequest $request)
+    public function update(Finance $finance, Request $request)
     {
-        $array_store = array_merge($request->all(), [
-            'date' => date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d')
-        ]);
-
-        $finance->update($array_store);
-        return redirect('/finance/index');
+        $data = $request->all();
+        $account_category = AccountCategory::where('id',$data['account_category_id'])->first();
+        $balance = $account_category->balance;
+        $data['date'] = date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d');
+        //    $store_array = array_merge($request->all(), ['balance' =>  $request->debit-$request->credit]);
+        $account = Account::find($request->account_id);
+        if($data['debit']){
+            $data['balance'] = $balance + $data['debit'];
+        }else{
+            if($balance > $data['credit']){
+                $data['balance'] = $balance - $data['credit'];
+            }else{
+                return redirect()->back()->with('error', 'Saldo tidak mencukupi');
+            }
+        }
+        AccountCategory::find($account_category->id)->update(['balance' => $data['balance']]);
+        $finance->update($data);
+        return redirect('/finance/main');
     }
 
     public function destroy(Finance $finance)

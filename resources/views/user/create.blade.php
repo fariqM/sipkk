@@ -2,15 +2,15 @@
 
 @section('content')
 <x-header-content>
-    <a href="/event/index">Kegiatan</a> / Tambah Kegiatan
+    <a href="/user/index">Pengguna</a> / Tambah Pengguna
 </x-header-content>
 
 <div class="main-content bg-clouds">
     <div class="container-fluid p-t-15">
-        <div class="column bg-white is-flexible shadow-2dp ps">
+        <div class="column bg-white is-flexible shadow-2dp ps"  style="width: 50%; margin:auto auto;">
             <div class="box">
                 <header class="bg-wet-asphalt text-white">
-                    <h4>Form Kegiatan</h4>
+                    <h4>Tambah Pengguna</h4>
                     <!-- begin box-tools -->
                     <div class="box-tools">
                         <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
@@ -19,7 +19,7 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="/user/store" method="POST" style="margin: 0 auto; width:40%">
+                    <form action="/user/store" method="POST" style="margin: 0 auto; width:70%">
                         @csrf
 
                         <div class="form-group col-md-12">
@@ -28,6 +28,15 @@
                                 name="name" value="{{ old('name') }}" placeholder="Masukkan nama pengguna baru">
                             @error('name')
                             <label class="label-error" for="name">{{ $message }}</label>
+                            @enderror
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control @error('email') input-error @enderror" id="email"
+                                name="email" value="{{ old('email') }}" placeholder="Masukkan email pengguna baru">
+                            @error('email')
+                            <label class="label-error" for="email">{{ $message }}</label>
                             @enderror
                         </div>
 
@@ -60,15 +69,6 @@
 
                             @error('password_confirmation')
                             <label class="label-error" for="password_confirmation">{{ $message }}</label>
-                            @enderror
-                        </div>
-
-                        <div class="form-group col-md-12">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control @error('email') input-error @enderror" id="email"
-                                name="email" value="{{ old('email') }}" placeholder="Masukkan email pengguna baru">
-                            @error('email')
-                            <label class="label-error" for="email">{{ $message }}</label>
                             @enderror
                         </div>
 

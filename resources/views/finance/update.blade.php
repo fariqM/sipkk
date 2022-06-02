@@ -11,7 +11,7 @@
 
 <div class="main-content bg-clouds">
     <div class="container-fluid p-t-15">
-        <div class="column bg-white is-flexible shadow-2dp ps">
+        <div class="column bg-white is-flexible shadow-2dp ps" style="margin: 0 auto; width:50%">
             <div class="box">
                 <header class="bg-wet-asphalt text-white">
                     <h4>Setup Rekening</h4>
@@ -23,7 +23,7 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="{{ route('finance.update', ['finance' => $finance->id]) }}" method="POST" style="margin: 0 auto; width:40%">
+                    <form action="{{ route('finance.update', ['finance' => $finance->id]) }}" method="POST" style="margin: 0 auto; width:70%">
                         @csrf
 
                         <div class="form-group col-md-12 ">
@@ -33,8 +33,7 @@
                                     <i class="fa fa-fw fa-calendar-plus-o"></i>
                                 </span>
                                 <input class="form-control @error('date') input-error @enderror" id="date" name="date"
-                                    placeholder="Masukkan Tanggal Pembukuan." value="{{  old('date') ? old('date') : date_format(date_create_from_format(" Y-m-d",
-                                    $finance->date), 'd/m/Y') }}">
+                                    placeholder="Masukkan Tanggal Pembukuan." value="{{ date('Y-m-d', strtotime($finance->date)) }}">
                             </div>
                             {{-- <label class="label-error" for="user_id">tes</label> --}}
 
@@ -44,25 +43,26 @@
                         </div>
 
                         <div class="form-group col-md-12 ">
-                            <label for="atext">Katergori Buku Rekening</label>
-                            <div style="display: inline-table">
-                                <select class="form-control @error('account_category_id') input-error @enderror"
-                                    id="category" name="account_category_id">
-                                    <option value="" disabled selected>Pilih Kategori Rekening</option>
-                                    @foreach ($data as $item)
-                                    @if ($item->id == old('account_category_id') || $item->id ==
-                                    $finance->account_category_id)
-                                    <option value="{{  $item->id }}" selected>{{ $item->title }} - ({{ $item->code }})
-                                    </option>
-                                    @endif
-                                    <option value="{{  $item->id }}">{{ $item->title }} - ({{ $item->code }})</option>
-                                    @endforeach
-                                </select>
+                            <label for="atext">Jenis Rekening</label>
+                            <select class="form-control @error('account_id') input-error @enderror"
+                                id="account_id" name="account_id">
+                                <option value="" disabled selected>Pilih Jenis Rekening</option>
+                                @foreach ($account as $item)
+                                    <option {{ $finance->accountCategory->account_id == $item->id?'selected':'' }} value="{{  $item->id }}">{{ $item->title }}</option>
+                                @endforeach
+                            </select>
+                            @error('account_category_id')
+                            <label class="label-error" for="category">{{ $message }}</label>
+                            @enderror
+                        </div>
 
-                                <span class="input-group-addon" id="clear_addon" style="cursor: pointer">
-                                    <a href="/account/create">Setup Rekening</a>
-                                </span>
-                            </div>
+                        <div class="form-group col-md-12 ">
+                            <label for="atext">Sub Rekening</label>
+                            <select class="form-control @error('account_category_id') input-error @enderror"
+                                id="subaccount" name="account_category_id">
+                                <option value="" disabled selected>Pilih Sub Rekening</option>
+                                <option value="{{ $finance->account_category_id }}" selected>{{ $finance->accountCategory->title }} ({{ $finance->accountCategory->code }})</option>
+                            </select>
                             @error('account_category_id')
                             <label class="label-error" for="category">{{ $message }}</label>
                             @enderror
@@ -70,9 +70,10 @@
 
                         <div class="form-group col-md-12 ">
                             <label for="descForm">Keterangan</label>
-                            <input type="text" class="form-control  @error('description') input-error @enderror"
+                            {{-- <input type="text" class="form-control @error('description') input-error @enderror"
                                 id="descForm" name="description" placeholder="Masukkan Keterangan Keuangan..."
-                                value="{{ old('description') ? old('description') : $finance->description }}">
+                                value="{{ old('description') }}"> --}}
+                                <textarea name="description" cols="30" rows="5" class="form-control">{{ $finance->description }}</textarea>
                             @error('description')
                             <label class="label-error" for="descForm">{{ $message }}</label>
                             @enderror
@@ -80,10 +81,9 @@
 
                         <div class="form-group col-md-12 ">
                             <label for="debitForm">Debet</label>
-                            <input type="number" step="0.01" min="0"
-                                class="form-control  @error('debit') input-error @enderror" id="debitForm" name="debit"
-                                placeholder="Masukkan Debet Keuangan (jik ada)."
-                                value="{{ old('debit') ? old('debit') : $finance->debit }}">
+                            <input type="number" min="0"
+                                class="form-control @error('debit') input-error @enderror" id="debitForm" name="debit"
+                                placeholder="Masukkan Debet (jik ada)." value="{{ $finance->debit }}">
                             @error('debit')
                             <label class="label-error" for="debitForm">{{ $message }}</label>
                             @enderror
@@ -91,14 +91,23 @@
 
                         <div class="form-group col-md-12 ">
                             <label for="creditForm">Kredit</label>
-                            <input type="number" step="0.01" min="0"
-                                class="form-control  @error('credit') input-error @enderror" id="creditForm"
-                                name="credit" placeholder="Masukkan Kredit Keuangan (jik ada)."
-                                value="{{ old('credit') ? old('credit') : $finance->credit }}">
+                            <input type="number" min="0"
+                                class="form-control @error('credit') input-error @enderror" id="creditForm"
+                                name="credit" placeholder="Masukkan Kredit (jik ada)." value="{{ $finance->credit }}">
                             @error('credit')
                             <label class="label-error" for="creditForm">{{ $message }}</label>
                             @enderror
                         </div>
+
+                        {{-- <div class="form-group col-md-12 ">
+                            <label for="balanceForm">Saldo</label>
+                            <input type="number" min="0"
+                                class="form-control @error('balance') input-error @enderror" id="balanceForm"
+                                name="balance" placeholder="Masukkan Saldo (jik ada)." value="{{ old('balance') }}">
+                            @error('balance')
+                            <label class="label-error" for="balanceForm">{{ $message }}</label>
+                            @enderror
+                        </div> --}}
 
                         <div class="form-group col-md-12">
                             <button type="submit" class="btn btn-flat btn-primary  u-posRelative">Simpan</button>
@@ -141,6 +150,25 @@
         }else{
             $('#debitForm').attr('disabled', false);
         }
+    });
+    $('#account_id').change(function (e) {
+        e.preventDefault();
+        // ajax
+        var id = $(this).val();
+        $.ajax({
+            url: "{{ url('api/sub-account-data') }}/"+id,
+            type: "GET",
+            dataType: "json",
+            success: function(data){
+                var data = data.data;
+                var html = '';
+                html += '<option value="" disabled selected>Pilih Sub Rekening</option>';
+                $.each(data, function(key, value) {
+                    html += '<option value="'+value.id+'">'+value.title+' ('+value.code+')</option>';
+                });
+                $('#subaccount').html(html);
+            }
+        });
     });
 </script>
 {{-- end custom input --}}

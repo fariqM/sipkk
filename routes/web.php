@@ -40,7 +40,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
             Route::prefix('finance')->group(function(){
                 Route::get('main', 'FinanceController@main')->name('finance');
                 Route::get('index/{slug}', 'FinanceController@index');
-                Route::get('create/{slug}', 'FinanceController@create');
+                Route::get('create', 'FinanceController@create');
                 Route::post('store', 'FinanceController@store');
                 Route::get('show/{finance:id}', 'FinanceController@show');
                 Route::post('show/{finance:id}/update', 'FinanceController@update')->name('finance.update');

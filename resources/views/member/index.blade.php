@@ -29,9 +29,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>ID</th>
                             <th>Nama</th>
                             <th>Email</th>
-                            <th>Phone</th>
+                            <th>No Telp</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -39,11 +40,12 @@
                         @foreach ($members as $member)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $member->id }}</td>
                                 <td>{{ $member->name }}</td>
                                 <td>{{ $member->email }}</td>
                                 <td>{{ $member->phone }}</td>
                                 <td style="display: flex; gap:5px">
-                                    <a href="{{ route('member.edit',$member) }}" class="btn btn-flat btn-primary">Edit</a>
+                                    <a href="{{ route('member.edit',$member) }}" class="btn btn-flat btn-primary">Ubah</a>
                                     <form action="{{ route('member.destroy',$member) }}" method="post">
                                         @csrf
                                         @method('DELETE')

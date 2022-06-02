@@ -12,7 +12,7 @@
 
 <div class="main-content bg-clouds">
     <div class="container-fluid p-t-15">
-        <div class="column bg-white is-flexible shadow-2dp ps">
+        <div class="column bg-white is-flexible shadow-2dp ps" style="margin: 0 auto; width:50%">
             <div class="box">
                 <header class="bg-wet-asphalt text-white">
                     <h4>Form Kegiatan</h4>
@@ -24,7 +24,7 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="/event/store" method="POST" style="margin: 0 auto; width:40%">
+                    <form action="/event/store" method="POST" style="margin: 0 auto; width:70%">
                         @csrf
 
                         <div class="form-group col-md-12 ">
@@ -119,6 +119,10 @@
 <script src="{{ asset('assets/vendor/cleave/cleave.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/cleave/addons/cleave-phone.us.js') }}"></script>
 
+{{-- sweet alert --}}
+<script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.all.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.min.js') }}"></script>
+
 {{-- custom input --}}
 <script>
     flatpickr("#date", {
@@ -128,5 +132,61 @@
         numeral: true,
         numeralThousandsGroupStyle: 'thousand'
     });
+
+    const addEvent = () => {
+        Swal.fire({
+            title: 'Tambahkan Kegiatan',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Tambahkan',
+            cancelButtonText:'Batalkan',
+            showLoaderOnConfirm: true,
+            confirmButtonColor: '#C9302C',
+            cancelButtonColor: '#337AB7',
+            preConfirm: (data) => {
+                if (data==="" || data===null) {
+                    Swal.fire(
+                        'gagal!',
+                        'Input Kosong!',
+                        'error'
+                    )
+                } else {
+                    addEventAction(data)
+                }
+            },
+        })
+    }
+
+    const addEventAction = (data) => {
+        // console.log('add');
+        $.ajax({
+           type:'POST',
+           url:"/api/add-event",
+           data:{description:data},
+           success:(response) => {
+                Swal.fire(
+                    'Sukses!',
+                    'Data berhasil ditambahkan!',
+                    'success'
+                )
+                select = document.getElementById('event_id');
+                var opt = document.createElement('option');
+                opt.value = response.id;
+                opt.innerHTML = response.description;
+                select.appendChild(opt);
+            },
+           error:(e) =>{
+            console.log(e);
+            Swal.fire(
+                    'gagal!',
+                    'Ada yang error!',
+                    'error'
+                )
+           }
+        });
+    }
 </script>
 @endsection

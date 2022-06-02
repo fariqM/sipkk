@@ -14,7 +14,7 @@
     <div class="container-fluid p-t-15">
         <div class="box">
             <header>
-                <h3>Indeks Rekening</h3>
+                <h3>Catatan Rekening</h3>
                 <div class="box-tools">
                     <a href="/account/create" class="btn btn-flat btn-primary  u-posRelative"
                         style="color: white">Tambahkan Rekening</a>
@@ -25,32 +25,25 @@
                     cellspacing="0">
                     <thead>
                         <tr>
-                            <th colspan="3" class="text-center">List Rekening</th>
-                            <th colspan="2">Aksi</th>
+                            <th>Level Rekening</th>
+                            <th>Jenis Rekening</th>
+                            <th>Kode Rekening</th>
+                            <th>Nama Rekening</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($accounts as $account)
+                        @foreach ($accountCategories as $accountCategory)
                         <tr>
-                            <td class="text-right" style="font-weight: bold; width:20px">{{ $account->idx }}</td>
-                            <th style="width: 70px"></th>
-                            <td style="font-weight: bold; width:600px">{{ $account->title }}</td>
+                            <td>{{ $accountCategory->level }}</td>
+                            <td>{{ $accountCategory->account->title }}</td>
+                            <td>{{ $accountCategory->code }}</td>
+                            <td>{{ $accountCategory->title }}</td>
                             <td colspan="2">
-                                <button id='delete' class='btn btn-danger' onclick="deleteParent({{ $account->id }})" style='margin-right:1rem'>Hapus</button>
-                                <a href="{{ route('account.update',$account) }}" class='btn btn-primary' >Ubah</a>
+                                <button id='delete' class='btn btn-danger' onclick="deleteChild({{ $accountCategory->id }})" style='margin-right:1rem'>Hapus</button>
+                                <a href="{{ route('account.update',$accountCategory->id) }}" class='btn btn-primary' >Ubah</a>
                             </td>
                         </tr>
-                            @foreach ($account->categories as $item)
-                                <tr>
-                                    <th></th>
-                                    <td class="text-right" style="font-weight: bold">{{ $item->code }}</td>
-                                    <td>{{ $item->title }}</td>
-                                    <td colspan="2">
-                                        <button id='delete' class='btn btn-danger' onclick="deleteChild({{ $item->id }})" style='margin-right:1rem'>Hapus</button>
-                                        <a href="{{ url('account/child-update/'.$item->id ) }}" class='btn btn-primary'>Ubah</a>
-                                    </td>
-                                </tr>
-                            @endforeach
                         @endforeach
                     </tbody>
                 </table>

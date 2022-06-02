@@ -7,7 +7,7 @@
 
 <div class="main-content bg-clouds">
     <div class="container-fluid p-t-15">
-        <div class="column bg-white is-flexible shadow-2dp ps">
+        <div class="column bg-white is-flexible shadow-2dp ps" style="margin: 0 auto; width:50%">
             <div class="box">
                 <header class="bg-wet-asphalt text-white">
                     <h4>Form Tambah Anggota</h4>
@@ -19,7 +19,7 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="{{ route('member.store') }}" method="POST" style="margin: 0 auto; width:40%">
+                    <form action="{{ route('member.store') }}" method="POST" style="margin: 0 auto; width:70%">
                         @csrf
 
                         <div class="form-group col-md-12">

@@ -26,22 +26,30 @@
                     <thead>
                         <tr>
                             <th>Tanggal</th>
+                            <th>Jenis Rekening</th>
                             <th>Kode</th>
                             <th>Keterangan</th>
                             <th>Debit</th>
                             <th>Kredit</th>
                             <th>Saldo</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($finance as $item)
                             <tr>
                                 <td>{{ date('d/m/Y', strtotime($item->date)) }}</td>
-                                <td class="{{ Str::length($item->account->code) > 4 ? 'text-right' : 'text-left' }}">{{ $item->account->code }}</td>
+                                <td>{{ $item->accountCategory->account->title }}</td>
+                                <td class="{{ Str::length($item->accountCategory->code) > 4 ? 'text-right' : 'text-left' }}">{{ $item->accountCategory->code }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td>{{ $item->debit }}</td>
-                                <td>{{ $item->credit }}</td>
-                                <td>{{ $item->balance }}</td>
+                                <td>Rp. {{ number_format($item->debit) }}</td>
+                                <td>Rp. {{ number_format($item->credit) }}</td>
+                                <td>Rp. {{ number_format($item->balance) }}</td>
+                                <td>
+                                    <button style="margin-right: 1rem" class='btn-flat btn-danger'
+                                        onclick="deleteModal({{ $item->id }})">Hapus</button>
+                                    <button class='btn-flat btn-primary' onclick="showFinance({{ $item->id }})">Ubah</button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -60,28 +68,35 @@
             </header>
             <div class="box-body">
                 <table id="eventsTables" class="table table-striped table-bordered dataTable " width="100%"
-                cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Pemberi</th>
-                        <th>Nominal</th>
-                        <th>Kegiatan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($incomes as $item)
+                    cellspacing="0">
+                    <thead>
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ date('d/m/Y',strtotime($item->date)) }}</td>
-                            <td>{{ $item->user->name }}</td>
-                            <td>Rp. {{ number_format($item->balance,2,',','.') }}</td>
-                            <td>{{ $item->event->description }}</td>
+                            <th>No</th>
+                            <th>Id Anggota</th>
+                            <th>Tanggal Pembukuan</th>
+                            <th>Pemberi</th>
+                            <th>Nominal</th>
+                            <th>Kegiatan</th>
+                            <th>Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($incomes as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->user->id }}</td>
+                                <td>{{ date('d/m/Y',strtotime($item->date)) }}</td>
+                                <td>{{ $item->user->name }}</td>
+                                <td>Rp. {{ number_format($item->balance,2,',','.') }}</td>
+                                <td>{{ $item->event->description }}</td>
+                                <td>
+                                    <button id='update' onclick="deleteAlert({{ $item }})" class='btn btn-danger' style='margin-right:1rem'>Hapus</button>
+                                    <a href="{{ route('event.show',$item) }}" class='btn btn-primary'>Ubah</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -96,366 +111,125 @@
 <script src="{{ asset('assets/vendor/datatables/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/pagejs/table-datatable.js') }}"></script>
 
+{{-- sweet alert --}}
+<script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.all.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/sweet-alert/sweetalert2.min.js') }}"></script>
+
 
 {{-- creating datatable events --}}
 <script>
-    const customDateFormat = (date) => {
-        // console.log(date);
-        var dateParts = date.split("-");
-        var jsDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2)).toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'})
-        return jsDate;
-        // return jsDate
-    }
-
-    const numberWithCommas = (value) => {
-        var parts = value.toString().split(".");
-		parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		return parts.join(".");
-    }
-
-    function format ( d ) {
-        // console.log(d);
-        if (d.incomes.length>0) {
-            let row = ''
-            d.incomes.forEach(element => {
-            row +=`<tr>
-                        <td>${customDateFormat(element.date)}</td>
-                        <td>${element.user.name}</td>
-                        <td>Rp ${numberWithCommas(element.balance)}</td>
-                    </tr>`
-            });
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="table table-striped-expand  table-bordered">'+
-                        '<thead>'+
-                            '<tr>'+
-                                '<th>Tanggal</th>'+
-                                '<th>Pemberi</th>'+
-                                '<th>Nominal</th>'+
-                            '</tr>'+
-                        '</thead>'+
-                        '<tbody>'+
-                            row
-                        '</tbody>'+
-                    '</table>';
-        } else {
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="table table-striped-expand  table-bordered">'+
-                        '<thead>'+
-                            '<tr>'+
-                                '<th>Tanggal</th>'+
-                                '<th>Pemberi</th>'+
-                                '<th>Nominal</th>'+
-                            '</tr>'+
-                        '</thead>'+
-                        '<tbody>'+
-                            '<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty">Tidak ada pemasukan untuk kegiatan ini.</td></tr>'+
-                        '</tbody>'+
-                    '</table>';
-        }
-        // `d` is the original data object for the row
-
-    }
 
     // #### start create datatable ####
     $(document).ready(function() {
         $('#eventsTable1').DataTable()
         $('#eventsTables').DataTable()
-        var table = $('#eventsTable').DataTable( {
-            "ajax": {
-                url:'/api/events-data',
-                dataSrc: ''
-            },
-            responsive: {
-            details: {
-                type: 'column',
-                target: -1
-            }
-        },
-            "columns": [
-                {
-                    "className":      'dt-control',
-                    "orderable":      true,
-                    "data":           null,
-                    "defaultContent": ""
-                },
-                { "data": "description" },
-            ],
-            "order": [[1, 'asc']]
-        });
+    })
 
-        // Add event listener for opening and closing details
-        $('#eventsTable tbody').on('click', 'td.dt-control', function () {
-            var tr = $(this).closest('tr');
-            var row = table.row( tr );
-
-                if ( row.child.isShown() ) {
-                    // This row is already open - close it
-                    row.child.hide();
-                    tr.removeClass('shown');
-                    $(this).closest('td').removeClass('row-haschild ')
-                }
-                else {
-                    // Open this row
-                    row.child( format(row.data()) ).show();
-                    tr.addClass('shown');
-                    $(this).closest('td').addClass('row-haschild ')
-                }
-            });
-        });
-    // #### end create datatable ####
-
-</script>
-
-{{-- creating datatable finance --}}
-<script>
-    $(document).ready( function () {
-        $('#financeTable').DataTable({
-            pageLength : 5,
-            lengthMenu :[5, 10, 20, 50, 100],
-        });
-    });
-</script>
-
-{{-- chart-js --}}
-<script src="{{ asset('assets/vendor/chart-js/chart.js') }}"></script>
-
-{{-- chart styling --}}
-<script>
-    const legendText = {
-        color: '#911',
-        font: {
-            family: 'Comic Sans MS',
-            size: 15,
-            weight: 'bold',
-            lineHeight: 1.2,
-        },
+    const showFinance= (id) => {
+        window.location = `/finance/show/${id}`
     }
 
-    const bgColor = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'];
-    const brColor = ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'];
-</script>
-{{-- end chart styling --}}
+    const alertSuccess = (message) => {
+        Swal.fire(
+            'Sukses!',
+            message,
+            'success'
+        )
+    }
 
-{{-- Debit Data --}}
-<script>
-    $(document).ready(function(){
-        const chartColor = []
+    const alertError = (message) => {
+        Swal.fire(
+            'gagal!',
+            message,
+            'error'
+        )
+    }
 
-        let debitData = {}
-
-        const getDebitData = async () => {
-            await
-            $.ajax({
-                type:'GET',
-                url:`/api/debit-data`,
-                success:(response) => {
-                    // console.log(response);
-                    debitData = response
-                },
-                error:(e) =>{
-                    console.log(e);
-                }
-            });
-        }
-
-        getDebitData().then(response => {
-            let bgcolor = [];
-            let brcolor = [];
-
-            for (let index = 0; index < debitData.debit.length; index++) {
-                let rand = Math.floor(Math.random() * bgColor.length);
-                bgcolor = [...bgcolor, bgColor[rand]];
-                brcolor = [...brcolor, brColor[rand]];
+    const deleteAlert = (data) => {
+        // console.log(data);
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Aksi ini akan menghapus catatan donasi/transaksi yang terkait dengan kegiatan ini.",
+            icon: 'warning',
+            cancelButtonText:'Tidak',
+            showCancelButton: true,
+            confirmButtonColor: '#C9302C',
+            cancelButtonColor: '#337AB7',
+            confirmButtonText: 'Ya, Hapus'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                deleteChild(data.id).then(response => {
+                    let table = $('#eventsTable').DataTable();
+                    table.ajax.reload();
+                })
             }
-            var barData = {
-                labels: debitData.date,
-                    datasets: [{
-                        label: `Debet bulan ${debitData.Month}`,
-                        backgroundColor: bgcolor,
-                        borderColor: brcolor,
-                        borderWidth: 1,
-                        data: [...debitData.debit, 0]
-                    }]
-            };
-
-            var myBarChart = new Chart($('#debitData'), {
-                type: 'bar',
-                data: barData,
-                options: {
-                    scales: {
-                        y:{
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Debet',
-                                color: legendText.color,
-                                font: legendText.font
-                            }
-                        },
-                        x:{
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Tanggal',
-                                color: legendText.color,
-                                font: legendText.font
-                            }
-                        },
-                    }
-                }
-            });
         })
-    })
+    }
 
-</script>
-{{-- end fetch Debit Data --}}
+    const deleteChild = async (id) => {
+        await
+        $.ajax({
+           type:'DELETE',
+           url:`/api/delete-child-event/${id}`,
+           success:(response) => {
+                alertSuccess('Kegiatan berhasil dihapus')
+                location.reload()
+            },
+           error:(e) =>{
+                console.log(e);
+                alertError('Gagal menghapus data.')
+           }
+        });
+    }
 
+    const deleteAction = async (id) => {
+        $.ajax({
+           type:'DELETE',
+           url:`/api/delete-finance/${id}`,
+           success:(response) => {
+                Swal.fire(
+                    'Sukses!',
+                    'Berhasil terhapus.',
+                    'success'
+                )
+                return response
+            },
+           error:(e) =>{
+               console.log(e);
+                Swal.fire(
+                    'Gagal!',
+                    'Ada yang error.',
+                    'success'
+                )
+                return e
+           }
+        });
+    }
 
-{{-- Credit Data --}}
-<script>
-    $(document).ready(function(){
-        const chartColor = []
-
-        let data = {}
-
-        const getDebitData = async () => {
-            await
-            $.ajax({
-                type:'GET',
-                url:`/api/credit-data`,
-                success:(response) => {
-                    // console.log(response);
-                    data = response
-                },
-                error:(e) =>{
-                    console.log(e);
-                }
-            });
-        }
-
-        getDebitData().then(response => {
-            let bgcolor = [];
-            let brcolor = [];
-
-            for (let index = 0; index < data.credit.length; index++) {
-                let rand = Math.floor(Math.random() * bgColor.length);
-                bgcolor = [...bgcolor, bgColor[rand]];
-                brcolor = [...brcolor, brColor[rand]];
+    const deleteModal = (id) => {
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Aksi ini akan menghapus semua nomor rekening yang termasuk dalam kategori.",
+            icon: 'warning',
+            cancelButtonText:'Tidak',
+            showCancelButton: true,
+            confirmButtonColor: '#C9302C',
+            cancelButtonColor: '#337AB7',
+            confirmButtonText: 'Ya, Hapus'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                deleteAction(id).then(response => {
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                    // var table = $('#financeTable').DataTable( {
+                    //     ajax: "/api/finance-data"
+                    // });
+                    // table.ajax.reload();
+                })
             }
-            var barData = {
-                labels: data.date,
-                    datasets: [{
-                        label: `Kredit bulan ${data.Month}`,
-                        backgroundColor: bgcolor,
-                        borderColor: brcolor,
-                        borderWidth: 1,
-                        data: [...data.credit, 0]
-                    }]
-            };
-
-            var myBarChart = new Chart($('#creditData'), {
-                type: 'bar',
-                data: barData,
-                options: {
-                    scales: {
-                        y:{
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Kredit',
-                                color: legendText.color,
-                                font: legendText.font
-                            }
-                        },
-                        x:{
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Tanggal',
-                                color: legendText.color,
-                                font: legendText.font
-                            }
-                        },
-                    }
-                }
-            });
         })
-    })
-
+    }
 </script>
-{{-- end fetch Credit Data --}}
-
-{{-- Balance Data --}}
-<script>
-    $(document).ready(function(){
-        const chartColor = []
-
-        let balanceData = {}
-
-        const getDebitData = async () => {
-            await
-            $.ajax({
-                type:'GET',
-                url:`/api/balance-data`,
-                success:(response) => {
-                    balanceData = response
-                },
-                error:(e) =>{
-                    console.log(e);
-                }
-            });
-        }
-
-        getDebitData().then(response => {
-            let bgcolor = [];
-            let brcolor = [];
-            // console.log(balanceData.balance.length);
-
-            for (let index = 0; index < balanceData.balance.length; index++) {
-
-                let rand = Math.floor(Math.random() * bgColor.length);
-                bgcolor = [...bgcolor, bgColor[rand]];
-                brcolor = [...brcolor, brColor[rand]];
-            }
-            var barData = {
-                labels: balanceData.date,
-                    datasets: [{
-                        label: `Kredit bulan ${balanceData.Month}`,
-                        backgroundColor: bgcolor,
-                        borderColor: brcolor,
-                        borderWidth: 1,
-                        data: [...balanceData.balance, 0]
-                    }]
-            };
-
-            var myBarChart = new Chart($('#balanceData'), {
-                type: 'bar',
-                data: barData,
-                options: {
-                    scales: {
-                        y:{
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Kredit',
-                                color: legendText.color,
-                                font: legendText.font
-                            }
-                        },
-                        x:{
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Tanggal',
-                                color: legendText.color,
-                                font: legendText.font
-                            }
-                        },
-                    }
-                }
-            });
-        })
-    })
-
-</script>
-{{-- end fetch Balance Data --}}
 
 @endsection

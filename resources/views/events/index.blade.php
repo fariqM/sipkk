@@ -29,7 +29,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Tanggal</th>
+                            <th>Id Anggota</th>
+                            <th>Tanggal Pembukuan</th>
                             <th>Pemberi</th>
                             <th>Nominal</th>
                             <th>Kegiatan</th>
@@ -40,6 +41,7 @@
                         @foreach ($incomes as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->user->id }}</td>
                                 <td>{{ date('d/m/Y',strtotime($item->date)) }}</td>
                                 <td>{{ $item->user->name }}</td>
                                 <td>Rp. {{ number_format($item->balance,2,',','.') }}</td>
@@ -85,7 +87,7 @@
             confirmButtonText: 'Ya, Hapus'
             }).then((result) => {
             if (result.isConfirmed) {
-                deleteParent(data.id).then(response => {
+                deleteChild(data.id).then(response => {
                     let table = $('#eventsTable').DataTable();
                     table.ajax.reload();
                 })

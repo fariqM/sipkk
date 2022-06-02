@@ -10,19 +10,10 @@ class AccountCategoryController extends Controller
 {
     public function store(Request $request){
 
-        $id = $request->category;
-        $account = Account::findOrFail($id);
-        // dd($request->all());
-
-        $child_count = AccountCategory::where('account_id', $id)->count();
-        $code = $account->idx.'.'.str_pad($child_count+1, 2, '0', STR_PAD_LEFT);
-        // dd($code);
-        AccountCategory::create([
-            'level' => 2,
-            'account_id' => $id,
-            'code' => $code,
-            'title' => $request->account,
-        ]);
+        $data = $request->all();
+        $data['balance'] = 0;
+        $data['level'] = substr($data['code'], 0, 1);
+        AccountCategory::create($data);
         return redirect('/account/index');
     }
 }

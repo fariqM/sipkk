@@ -12,8 +12,8 @@ class AccountController extends Controller
     public function index()
     {
         $path = 'rekening';
-        $accounts = Account::get();
-        return view('account.index', compact('path', 'accounts'));
+        $accountCategories = AccountCategory::get();
+        return view('account.index', compact('path', 'accountCategories'));
     }
 
     public function create()

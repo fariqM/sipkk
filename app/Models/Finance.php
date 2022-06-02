@@ -18,7 +18,7 @@ class Finance extends Model
         'date'
     ];
 
-    public function account(){
+    public function accountCategory(){
         return $this->belongsTo(AccountCategory::class, 'account_category_id', 'id');
     }
 }

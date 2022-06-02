@@ -12,10 +12,10 @@
 
 <div class="main-content bg-clouds">
     <div class="container-fluid p-t-15">
-        <div class="column bg-white is-flexible shadow-2dp ps">
+        <div class="column bg-white is-flexible shadow-2dp ps" style="margin: 0 auto; width:50%">
             <div class="box">
                 <header class="bg-wet-asphalt text-white">
-                    <h4>Tambah Catatan Keuangan {{ $account->title }}</h4>
+                    <h4>Tambah Catatan Keuangan</h4>
                     <!-- begin box-tools -->
                     <div class="box-tools">
                         <a class="fa fa-fw fa-minus" href="#" data-box="collapse"></a>
@@ -23,8 +23,16 @@
                     </div>
                     <!-- END: box-tools -->
                 </header>
+                <div class="my-3">
+                    {{-- alert danger --}}
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                </div>
                 <div class="box-body collapse in">
-                    <form action="/finance/store" method="POST" style="margin: 0 auto; width:40%">
+                    <form action="/finance/store" method="POST" style="margin: 0 auto; width:70%">
                         @csrf
 
                         <div class="form-group col-md-12 ">
@@ -43,34 +51,25 @@
                             @enderror
                         </div>
 
-                        <input type="hidden" name="account_id" value="{{  $account->id }}">
-                        {{-- <div class="form-group col-md-12 ">
+                        <div class="form-group col-md-12 ">
                             <label for="atext">Jenis Rekening</label>
-                            <div @hasrole('Super Admin') style="display: inline-table" @endhasrole>
-                                <select class="form-control @error('account_id') input-error @enderror"
-                                    onchange="selectAccount(0)" id="account_drop" name="account_id">
-                                    <option value="{{  $account->id }}" selected>{{ $account->title }}</option>
-                                </select>
-                                @hasrole('Super Admin')
-                                <span class="input-group-addon" id="clear_addon" onclick="addAccount()"
-                                    style="cursor: pointer; min-width:16rem">
-                                    Setup Rekening
-                                </span>
-                                @endhasrole
-                            </div>
-                            @error('account_id')
+                            <select class="form-control @error('account_id') input-error @enderror"
+                                id="account_id" name="account_id">
+                                <option value="" disabled selected>Pilih Jenis Rekening</option>
+                                @foreach ($account as $item)
+                                <option value="{{  $item->id }}">{{ $item->title }}</option>
+                            @endforeach
+                            </select>
+                            @error('account_category_id')
                             <label class="label-error" for="category">{{ $message }}</label>
                             @enderror
-                        </div> --}}
+                        </div>
 
                         <div class="form-group col-md-12 ">
                             <label for="atext">Sub Rekening</label>
                             <select class="form-control @error('account_category_id') input-error @enderror"
                                 id="subaccount" name="account_category_id">
                                 <option value="" disabled selected>Pilih Sub Rekening</option>
-                                @foreach ($data as $item)
-                                    <option value="{{  $item->id }}">{{ $item->code }} ({{ $item->title }})</option>
-                                @endforeach
                             </select>
                             @error('account_category_id')
                             <label class="label-error" for="category">{{ $message }}</label>
@@ -190,6 +189,26 @@
             },
         })
     }
+
+    $('#account_id').change(function (e) {
+        e.preventDefault();
+        // ajax
+        var id = $(this).val();
+        $.ajax({
+            url: "{{ url('api/sub-account-data') }}/"+id,
+            type: "GET",
+            dataType: "json",
+            success: function(data){
+                var data = data.data;
+                var html = '';
+                html += '<option value="" disabled selected>Pilih Sub Rekening</option>';
+                $.each(data, function(key, value) {
+                    html += '<option value="'+value.id+'">'+value.title+' ('+value.code+')</option>';
+                });
+                $('#subaccount').html(html);
+            }
+        });
+    });
 </script>
 
 {{-- action script --}}

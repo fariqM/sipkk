@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index()
     {
         $incomes = Income::all();
-        $finance = Finance::with('account')->orderBy('created_at', 'desc')->get();
+        $finance = Finance::with('accountCategory')->orderBy('date', 'desc')->get();
         $path = 'dasbor';
         return view('dashboard', compact('path', 'finance', 'incomes'));
     }

@@ -11,7 +11,7 @@
 
 <div class="main-content bg-clouds">
     <div class="container-fluid p-t-15">
-        <div class="column bg-white is-flexible shadow-2dp ps">
+        <div class="column bg-white is-flexible shadow-2dp ps justify-content-center" style="width: 50%; margin:auto auto;">
             <div class="box">
                 <header class="bg-wet-asphalt text-white">
                     <h4>Setup Rekening</h4>
@@ -23,31 +23,34 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
-                    <form action="/account/setup" method="POST" style="margin: 0 auto; width:50%">
+                    <form action="setup" method="POST" style="margin: 0 auto; width:70%">
                         @csrf
+                        <div class="form-group col-md-12 ">
+                            <label for="atext">Nama Rekening</label>
+                            <input type="text" class="form-control" id="atext" name="title"
+                                placeholder="Masukkan Nama Rekening...">
+                        </div>
+
+                        <div class="form-group col-md-12 ">
+                            <label for="atext">Kode</label>
+                            <input type="text" class="form-control" id="atext" name="code"
+                                placeholder="Masukkan kode Rekening...">
+                        </div>
+
                         <div class="form-group col-md-12">
-                            <label for="atext">Katergori Buku Rekening</label>
+                            <label for="atext">Jenis Rekening</label>
                             <div style="display: inline-table">
-                                <select class="form-control" id="category" name="category">
+                                <select class="form-control" id="category" name="account_id">
                                     <option value="" disabled selected>Pilih Kategori Rekening</option>
                                     @foreach ($data as $item)
                                     <option value="{{  $item->id }}">{{ $item->title }}</option>
                                     @endforeach
                                 </select>
                                 <span class="input-group-addon" id="clear_addon" style="cursor: pointer"
-                                    onclick="addCategory()">Tambahkan Kategori</span>
+                                    onclick="addCategory()">Tambahkan Jenis</span>
                             </div>
                         </div>
-                        <div class="form-group col-md-12 ">
-                            <label for="atext">Nama Rekening</label>
-                            <input type="text" class="form-control" id="atext" name="account"
-                                placeholder="Masukkan Nama Rekening...">
-                        </div>
-                        {{-- <div class="form-group col-md-7 ">
-                            <label for="atext">Kode</label>
-                            <input type="text" class="form-control" id="atext" name="code"
-                                placeholder="Masukkan kode Rekening...">
-                        </div> --}}
+
                         <div class="form-group col-md-12">
                             <button type="submit" class="btn btn-flat btn-primary  u-posRelative">Simpan</button>
                         </div>
