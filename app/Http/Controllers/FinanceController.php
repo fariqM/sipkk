@@ -14,7 +14,7 @@ class FinanceController extends Controller
 
     public function main()
     {
-        $finance = Finance::all();
+        $finance = Finance::all()->sortBy('created_at');
         $path = 'keuangan';
         return view('finance.main', compact('finance','path'));
     }
@@ -27,6 +27,7 @@ class FinanceController extends Controller
                 ->join('accounts','accounts.id','=','account_categories.account_id')
                 ->where('account_categories.account_id',$id)
                 ->select('finances.*')
+                ->orderBy('finances.id','desc')
                 ->get();
         $path = 'keuangan';
         return view('finance.index', compact('path', 'data','title'));
@@ -48,11 +49,8 @@ class FinanceController extends Controller
     public function store(FinanceRequest $request)
     {
         $data = $request->all();
-        $account_category = AccountCategory::where('id',$data['account_category_id'])->first();
-        $balance = $account_category->balance;
+        $balance = Finance::sum('debit') - Finance::sum('credit');
         $data['date'] = date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d');
-        //    $store_array = array_merge($request->all(), ['balance' =>  $request->debit-$request->credit]);
-        $account = Account::find($request->account_id);
         if(!empty($data['debit'])){
             $data['balance'] = $balance + $data['debit'];
         }else{
@@ -62,7 +60,6 @@ class FinanceController extends Controller
                 return redirect()->back()->with('error', 'Saldo tidak mencukupi');
             }
         }
-        AccountCategory::find($account_category->id)->update(['balance' => $data['balance']]);
         Finance::create($data);
         return redirect('/finance/main')->with('success', 'Data berhasil ditambahkan');
     }
@@ -79,11 +76,8 @@ class FinanceController extends Controller
     public function update(Finance $finance, Request $request)
     {
         $data = $request->all();
-        $account_category = AccountCategory::where('id',$data['account_category_id'])->first();
-        $balance = $account_category->balance;
+        $balance = Finance::where('id','!=',$finance->id)->sum('debit') - Finance::where('id','!=',$finance->id)->sum('credit');
         $data['date'] = date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d');
-        //    $store_array = array_merge($request->all(), ['balance' =>  $request->debit-$request->credit]);
-        $account = Account::find($request->account_id);
         if($data['debit']){
             $data['balance'] = $balance + $data['debit'];
         }else{
@@ -93,7 +87,6 @@ class FinanceController extends Controller
                 return redirect()->back()->with('error', 'Saldo tidak mencukupi');
             }
         }
-        AccountCategory::find($account_category->id)->update(['balance' => $data['balance']]);
         $finance->update($data);
         return redirect('/finance/main');
     }

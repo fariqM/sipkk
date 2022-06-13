@@ -33,7 +33,7 @@
                                     <i class="fa fa-fw fa-calendar-plus-o"></i>
                                 </span>
                                 <input class="form-control @error('date') input-error @enderror" id="date" name="date"
-                                    placeholder="Masukkan Tanggal Pembukuan." value="{{ date('Y-m-d', strtotime($finance->date)) }}">
+                                    placeholder="Masukkan Tanggal Pembukuan." value="{{ $finance->date }}">
                             </div>
                             {{-- <label class="label-error" for="user_id">tes</label> --}}
 
@@ -128,6 +128,7 @@
 
 {{-- custom input --}}
 <script>
+    // flatpickr set date
     flatpickr("#date", {
         dateFormat: "d/m/Y",
     });

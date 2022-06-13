@@ -54,7 +54,9 @@
                             <td>{{ $item->description }}</td>
                             <td>Rp. {{ number_format($item->debit) }}</td>
                             <td>Rp. {{ number_format($item->credit) }}</td>
-                            <td>Rp. {{ number_format($item->balance) }}</td>
+                            @if ($loop->first)
+                            <td style="vertical-align : middle;text-align:center;" rowspan="{{ $finance->count() }}">Rp. {{ number_format($finance->sum('debit') - $finance->sum('credit')) }}</td>
+                            @endif
                             <td>
                                 <button style="margin-right: 1rem" class='btn-flat btn-danger'
                                     onclick="deleteModal({{ $item->id }})">Hapus</button>
@@ -83,7 +85,9 @@
 
 <script>
     $(document).ready( function () {
-        $('#financeTable').DataTable();
+        $('#financeTable').DataTable({
+            ordering: false
+        });
     });
 
     const showFinance= (id) => {

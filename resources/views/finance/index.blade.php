@@ -74,7 +74,9 @@
 
 <script>
     $(document).ready( function () {
-        $('#financeTable').DataTable();
+        $('#financeTable').DataTable({
+            "ordering": false
+        });
     });
 
     const showFinance= (id) => {
