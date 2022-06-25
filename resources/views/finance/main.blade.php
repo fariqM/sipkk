@@ -26,8 +26,10 @@
         <div class="box">
             <header>
                 <div class="box-tools">
+                    @if ($finance->where('status',0)->count()==0)
                     <a href="create" class="btn btn-flat btn-primary  u-posRelative"
-                        style="color: white">Tambahkan Catatan Keuangan</a>
+                    style="color: white">Tambahkan Catatan Keuangan</a>
+                    @endif
                 </div>
             </header>
             <div class="box-body">
@@ -54,13 +56,14 @@
                             <td>{{ $item->description }}</td>
                             <td>Rp. {{ number_format($item->debit) }}</td>
                             <td>Rp. {{ number_format($item->credit) }}</td>
-                            @if ($loop->first)
-                            <td style="vertical-align : middle;text-align:center;" rowspan="{{ $finance->count() }}">Rp. {{ number_format($finance->sum('debit') - $finance->sum('credit')) }}</td>
-                            @endif
+                            <td>Rp. {{ number_format($item->balance) }}</td>
                             <td>
-                                <button style="margin-right: 1rem" class='btn-flat btn-danger'
-                                    onclick="deleteModal({{ $item->id }})">Hapus</button>
+                                @if ($item->status==0)
+                                <button class='btn-flat btn-danger'
+                                onclick="deleteModal({{ $item->id }})">Hapus</button>
                                 <button class='btn-flat btn-primary' onclick="showFinance({{ $item->id }})">Ubah</button>
+                                <button class='btn-flat btn-success' onclick="validateFinance({{ $item->id }})">Validasi</button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -92,6 +95,32 @@
 
     const showFinance= (id) => {
         window.location = `/finance/show/${id}`
+    }
+
+    const validateFinance = async (id) => {
+        if(confirm('are you sure?')){
+            $.ajax({
+           type:'PUT',
+           url:`/api/validate-finance/${id}`,
+           success:(response) => {
+                Swal.fire(
+                    'Sukses!',
+                    'Berhasil divalidasi.',
+                    'success'
+                )
+                window.location.reload()
+            },
+           error:(e) =>{
+               console.log(e);
+                Swal.fire(
+                    'Gagal!',
+                    'Ada yang error.',
+                    'success'
+                )
+                return e
+           }
+        });
+        }
     }
 
     const deleteAction = async (id) => {

@@ -23,6 +23,14 @@
                     <!-- END: box-tools -->
                 </header>
                 <div class="box-body collapse in">
+                    <div class="my-3">
+                        {{-- alert danger --}}
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                    </div>
                     <form action="{{ route('finance.update', ['finance' => $finance->id]) }}" method="POST" style="margin: 0 auto; width:70%">
                         @csrf
 

@@ -35,6 +35,7 @@ Route::namespace('App\Http\Controllers')->group(function(){
     Route::post('update-event/{event:id}', 'EventController@update');
     // Route::post('add-role', 'UserController@addRole');
 
+    Route::put('validate-finance/{finance:id}', 'FinanceController@validateFinance');
 
     Route::delete('delete-account', 'AccountController@destroyParent');
     Route::delete('delete-child-account', 'AccountController@destroyChild');

@@ -78,7 +78,7 @@ class FinanceController extends Controller
         $data = $request->all();
         $balance = Finance::where('id','!=',$finance->id)->sum('debit') - Finance::where('id','!=',$finance->id)->sum('credit');
         $data['date'] = date_format(date_create_from_format("d/m/Y", $request->date), 'Y-m-d');
-        if($data['debit']){
+        if(!empty($data['debit'])){
             $data['balance'] = $balance + $data['debit'];
         }else{
             if($balance > $data['credit']){
@@ -87,6 +87,7 @@ class FinanceController extends Controller
                 return redirect()->back()->with('error', 'Saldo tidak mencukupi');
             }
         }
+        $finance->update(['debit' => 0, 'credit' => 0]);
         $finance->update($data);
         return redirect('/finance/main');
     }
@@ -99,5 +100,11 @@ class FinanceController extends Controller
         } catch (\Throwable $th) {
             return response(['success' => false, 'error' => $th->getMessage()],500);
         }
+    }
+
+    public function validateFinance(Finance $finance)
+    {
+        $finance->update(['status' => 1]);
+        return response(['success' => true]);
     }
 }
